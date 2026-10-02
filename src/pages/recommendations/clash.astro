@@ -1,0 +1,233 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import providersData from '../../data/providers.json';
+
+const pageTitle = "Clash 适配与客户端配置教程：Clash Verge Rev/Sing-box/Subconverter 深度指南 - Clash测评家";
+const pageDesc = "全网最详尽的 Clash Verge Rev、Sing-box、Shadowrocket 及全平台客户端配置指引，包含零基础一键订阅、故障排查与自建订阅转换安全指南。";
+
+const breadcrumbs = [
+  { label: '机场推荐', url: '/recommendations/' },
+  { label: 'Clash 适配与客户端配置教程' }
+];
+
+const top4Providers = providersData.slice(0, 4);
+
+const clashSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": pageTitle,
+  "description": pageDesc,
+  "author": {
+    "@type": "Organization",
+    "name": "Clash测评家"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Clash测评家",
+    "url": "https://clashceping.homes"
+  }
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs} schema={clashSchema}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mb-10">
+      <h1 class="text-3xl font-extrabold text-white mb-3">
+        Clash 适配与客户端配置教程
+      </h1>
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        Clash Verge Rev 及 Sing-box 已成为 2026 年最主流的代理客户端。本页面全文直接展示多端配置细节，精选对 Clash 订阅原生兼容良好、节点分组规则完善的高品质专线机场。
+      </p>
+    </div>
+
+    <!-- Top 4 Primary Recommendations -->
+    <section class="mb-12">
+      <h2 class="text-xl font-bold text-white mb-6">⚡ Clash / Sing-box 最佳推荐榜 (固定前四名)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {top4Providers.map((provider) => (
+          <ProviderCard provider={provider} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 5-Part Complete Inline Reading Guide Section (No click/Read-More buttons) -->
+    <section class="mb-14 space-y-10 border-t border-slate-800 pt-10">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-bold mb-2">
+          📖 全文直接阅读 · 无需二次点击
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          📚 Clash 适配与客户端配置完整教程
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">
+          手把手拆解一键订阅、Sing-box 规则集、全平台客户端选型、报错故障排查与私有订阅转换安全。
+        </p>
+      </div>
+
+      <!-- Section 1 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-brand-500/20 text-brand-300 text-xs font-bold border border-brand-500/30">
+          专题一
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          一、 Clash Verge Rev 最佳适配机场推荐与一键订阅教程
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <strong class="text-white">Clash Verge Rev</strong> 是目前 Windows 和 macOS 平台功能最强、更新最活跃的开源代理客户端。它基于最新的 Mihomo (Clash.Meta) 内核，全面支持 Hysteria 2、VLESS 以及 Shadowsocks 2022 等新一代底层传输协议。
+        </p>
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 text-xs space-y-2">
+          <div class="font-bold text-brand-300 mb-1">🚀 4 步完成一键订阅与智能分流配置：</div>
+          <ol class="list-decimal list-inside text-slate-300 space-y-1.5 pl-1">
+            <li><strong>获取订阅 URL：</strong> 登录推荐机场后台（如 <a href="/providers/review-varnexa-lingdong/" class="text-brand-400 font-bold hover:underline">灵动云</a> 或 <a href="/providers/review-varnexa-twilight/" class="text-brand-400 font-bold hover:underline">暮光网络</a>），点击“一键导入 Clash 订阅”或手动复制订阅 URL。</li>
+            <li><strong>导入 Verge 客户端：</strong> 打开 Clash Verge Rev，进入左侧 <code class="text-brand-300 font-mono">订阅 (Profiles)</code> 菜单，在上方输入框粘贴 URL 并点击 <code class="text-brand-300 font-mono">导入 (Import)</code>。</li>
+            <li><strong>开启系统代理与 TUN 模式：</strong> 在设置中开启 <code class="text-brand-300 font-mono">系统代理</code>。如需接管游戏、命令行或全盘流量，请同时勾选 <code class="text-brand-300 font-mono">TUN 模式</code>（虚拟网卡）。</li>
+            <li><strong>选中分流节点：</strong> 在 <code class="text-brand-300 font-mono">代理 (Proxies)</code> 界面选择 <code class="text-brand-300 font-mono">Rule (规则模式)</code>，优先选择香港或日本 low-latency 低延迟专线节点。</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Section 2 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30">
+          专题二
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          二、 Sing-box 与 Clash 双兼容机场选择与规则集优化
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <strong class="text-white">Sing-box</strong> 是新一代通用代理网络框架，凭借极其轻量化的 C/Go 组合架构，在移动端和老旧设备上的内存占用控制极优（常驻运行内存仅 15MB 左右）。然而，Sing-box 的 JSON 配置文件格式与经典 Clash YAML 并不直接兼容。
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-purple-300">⚡ Sing-box 核心优势</div>
+            <p class="text-slate-400 leading-relaxed">
+              内存占用极小，启动毫秒级；原生支持 Hysteria 2、TUIC v5 和 ShadowTLS 协议；规则匹配吞吐性能提升 30%。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-brand-300">🎯 双兼容机场选型要点</div>
+            <p class="text-slate-400 leading-relaxed">
+              优先选择在后台同时提供 <code class="text-brand-300 font-mono">Clash 订阅</code> 和原生 <code class="text-brand-300 font-mono">Sing-box JSON 订阅</code> 的机场，无须通过第三方转换即可原生导入。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 3 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
+          专题三
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          三、 不同设备（Windows / Mac / Android / iOS）Clash 客户端全对比
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          不同系统平台有各自最推荐的开源/商业客户端方案。下表为你整理全平台主流软件的性能表现与选型建议：
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-slate-800 my-2">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900 text-slate-400">
+              <tr>
+                <th class="py-2.5 px-3 font-semibold">操作系统平台</th>
+                <th class="py-2.5 px-3 font-semibold">推荐首选客户端</th>
+                <th class="py-2.5 px-3 font-semibold">备选客户端</th>
+                <th class="py-2.5 px-3 font-semibold">推荐使用理由</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 bg-slate-950/40">
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">Windows 10/11</td>
+                <td class="py-2.5 px-3 text-brand-400 font-bold">Clash Verge Rev</td>
+                <td class="py-2.5 px-3 text-slate-400">Clash Nyanpasu</td>
+                <td class="py-2.5 px-3 text-slate-300">界面美观、TUN 模式稳定、Mihomo 内核更新最快。</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">macOS (Apple Silicon)</td>
+                <td class="py-2.5 px-3 text-brand-400 font-bold">Clash Verge Rev (Mac)</td>
+                <td class="py-2.5 px-3 text-slate-400">Surge 5 for Mac</td>
+                <td class="py-2.5 px-3 text-slate-300">M1/M2/M3 芯片原生编译，低功耗续航优异。</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">iOS / iPadOS</td>
+                <td class="py-2.5 px-3 text-brand-400 font-bold">Shadowrocket (小火箭)</td>
+                <td class="py-2.5 px-3 text-slate-400">Sing-box / Surge</td>
+                <td class="py-2.5 px-3 text-slate-300">扫码即用、完美兼容 Clash 规则与全 Protocol。</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">Android (安卓)</td>
+                <td class="py-2.5 px-3 text-brand-400 font-bold">Surfboard (冲浪板)</td>
+                <td class="py-2.5 px-3 text-slate-400">Sing-box for Android</td>
+                <td class="py-2.5 px-3 text-slate-300">完美适配 Android 材料设计与应用分流规则。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <!-- Section 4 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-red-500/20 text-red-300 text-xs font-bold border border-red-500/30">
+          专题四
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          四、 Clash 订阅失败与节点连接不上的排查与修复指南
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          当你在使用 Clash 过程中遇到“连接失败”或“订阅拉取失败”时，不必惊慌。根据编辑部整理的故障排除指引可快速修复：
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-red-400">1. 提示 Timeout / Ping 9999ms 超时</div>
+            <p class="text-slate-400 leading-relaxed">
+              <strong>修复方法：</strong> 请先核对本地网络连接，并在 Clash 中右键刷新订阅。如个别节点超时，通常为敏感期临时节点调度，可切换至其它 BGP 备用节点。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-amber-400">2. 提示 Schema / Parse Error 解析失败</div>
+            <p class="text-slate-400 leading-relaxed">
+              <strong>修复方法：</strong> 复制的订阅 URL 不完整或包含非法空格。请在机场后台重新复制“Clash 原生链接”后再粘贴导入。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-yellow-400">3. 本地 7890 端口占用冲突</div>
+            <p class="text-slate-400 leading-relaxed">
+              <strong>修复方法：</strong> 在 Clash 设置中将混合端口 (Mixed Port) 从 7890 修改为 7897 或 10809，避开其它代理软件端口冲突。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-blue-400">4. 运营商 DNS 污染拦截订阅下载</div>
+            <p class="text-slate-400 leading-relaxed">
+              <strong>修复方法：</strong> 将本地网卡 DNS 手动修改为 <code class="text-brand-300 font-mono">223.5.5.5</code> 或 <code class="text-brand-300 font-mono">1.1.1.1</code>，或联系机场客服获取最新的备用解析域名。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 5 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
+          专题五
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          五、 Subconverter 订阅转换安全隐患与自建转换节点方法
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          许多用户喜欢使用网上的免费 <strong class="text-white">Subconverter (订阅转换) API</strong> 网页，将通用 SSR/V2Ray 链接转换为 Clash 配置。然而，使用公共转换站存在极高的安全隐患：
+        </p>
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-amber-800/40 text-xs space-y-2">
+          <div class="font-bold text-amber-300">⚠️ 公共第三方订阅转换站三大安全风险：</div>
+          <ul class="list-disc list-inside text-slate-300 space-y-1 pl-1">
+            <li><strong>订阅 Token 泄漏：</strong> 不法转换站服务器后台会日志记录你提交的 URL，恶意提取你的套餐流量与节点密码。</li>
+            <li><strong>节点被插入广告：</strong> 部分公共转换服务会在生成的配置文件中暗中植入第三方广告或重定向分流规则。</li>
+            <li><strong>稳定性无法保障：</strong> 免费转换站随时可能因为并发过高或被封禁而停止服务，导致客户端无法更新订阅。</li>
+          </ul>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          💡 <strong class="text-white">推荐解决方案：</strong> 尽量直接使用推荐机场（如灵动云、暮光网络、飞猫云）后台的原生 Clash / Sing-box 一键导入链接；若必须转换，建议使用 Docker 在本地服务器一键自建私有化 Subconverter 服务。
+        </p>
+      </article>
+
+    </section>
+  </div>
+</BaseLayout>

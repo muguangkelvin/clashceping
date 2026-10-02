@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "免责声明 (Disclaimer) - Clash测评家";
+const pageDesc = "合规使用声明与第三方服务免责声明。";
+
+const breadcrumbs = [{ label: '免责声明' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">免责声明 (Disclaimer)</h1>
+    <p>本站定位为面向中文用户的网络连接技术探讨、远程办公与公开服务比较博客。本站提及的协议与客户端工具仅供合法合规的网络连接与数据加密使用。请遵守当地法律法规。</p>
+  </article>
+</BaseLayout>

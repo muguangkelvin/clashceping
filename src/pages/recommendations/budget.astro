@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import providersData from '../../data/providers.json';
+
+const pageTitle = "学生党与平价轻量机场挑选避坑指南：7元/月起高性价比与按流量计费算账解析 - Clash测评家";
+const pageDesc = "2026年适合学生党、低预算轻度冲浪与性价比控的平价机场推荐。对比按月重置套餐与不限时按量计费包，深度起底运营历史与避坑要点。";
+
+const breadcrumbs = [
+  { label: '机场推荐', url: '/recommendations/' },
+  { label: '学生党平价性价比专线' }
+];
+
+// Recommended Budget providers (飞猫云 #3, 二猫云 #18, 微风网络 #4, 一凡云 #19)
+const budgetProviders = [
+  providersData.find(p => p.slug === 'review-flycat-cloud') || providersData[2],
+  providersData.find(p => p.slug === 'review-2maoyun') || providersData[17],
+  providersData.find(p => p.slug === 'review-breezenet') || providersData[3],
+  providersData.find(p => p.slug === 'review-1fly-yifanyun') || providersData[18]
+];
+
+const faqs = [
+  {
+    question: "预算有限，买 10 元/月以下的平价机场会不会容易跑路或极度卡顿？",
+    answer: "市场上的确存在大量几块钱的‘月抛跑路机场’。避坑的关键在于查看服务商的运营历史背景（是否运营 2 年以上）和线路拓扑（是否为原厂租用的 BGP 中转）。比如老牌猫系背景的飞猫云（年付 84 元折合 7 元/月）和二猫云，拥有长期的运维支持，即使低价也能维持良好体验。"
+  },
+  {
+    question: "按月付费套餐与‘不限时按量计费包’哪种更划算？",
+    answer: "如果你主要是查阅资料、看网页或偶尔使用 AI，每月流量消耗低于 30GB，购买‘一次性不限时按量计费包’（如 100GB 用完为止）性价比极高，平均每个月折算成本可能只需 2-3 元；如果你每天需要长时间刷视频或下载大文件，按月重置的固定流量套餐更划算。"
+  },
+  {
+    question: "平价机场能够解锁 4K 视频和 ChatGPT 吗？",
+    answer: "像飞猫云和微风网络这样的优质平价服务商，主力节点也配置了全内网中转与流媒体解锁。但在晚高峰极度拥堵时段，平价套餐可能对冷门地区节点略有 限速，建议优先使用其东亚主力香港/日本节点。"
+  }
+];
+
+const budgetSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": pageTitle,
+  "description": pageDesc,
+  "author": {
+    "@type": "Organization",
+    "name": "Clash测评家"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Clash测评家",
+    "url": "https://clashceping.homes"
+  }
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs} schema={budgetSchema}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Title & Header -->
+    <header class="mb-10 border-b border-slate-800 pb-8">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-4">
+        💰 学生党与平价轻量专题指南
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-4">
+        2026 学生党与平价轻量机场挑选避坑指南：7元/月起高性价比与按流量计费算账解析
+      </h1>
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/70 p-4.5 rounded-xl border border-slate-800 shadow-inner">
+        对于学生党、刚入职的轻度办公人群以及预算有限的网络探索者来说，追求网络加速并不意味着一定要支付高昂的月费。市场上不乏单月仅需 7-15 元或提供不限时按量计费的高性价比优质机场。然而，平价市场也是“月抛跑路机场”与“虚标带宽”的重灾区。本文将为你拆解平价机场的成本算账逻辑，并精选运营多年、高稳定度的平价服务商。
+      </p>
+    </header>
+
+    <!-- Key Featured Providers for Budget -->
+    <section class="my-10">
+      <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+        <span class="text-emerald-400">⚡</span>
+        <span>学生党与平价高性价比首选机场</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {budgetProviders.map(p => (
+          <ProviderCard provider={p} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Main Content Body -->
+    <div class="prose prose-invert max-w-none space-y-8 text-slate-300 text-sm md:text-base leading-relaxed">
+      
+      <section class="bg-slate-950/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>一、</span>
+          <span>学生党流量算账：月付重置套餐 vs 不限时按量计费包</span>
+        </h2>
+        <p>
+          在选择平价机场之前，首先需要明确自己的实际流量消耗场景，切勿盲目冲动消费：
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-emerald-400 mb-1">📅 按月重置套餐 (适用于日常频繁使用)</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              比如 <a href="/providers/review-flycat-cloud/" class="text-brand-400 font-bold hover:underline">飞猫云</a> 提供的学生版套餐（84 元/年，包含每月 50GB 流量），折合每月只需 7 元。非常适合每天需要查资料、浏览网页及观看 1080p 视频的用户。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-emerald-400 mb-1">📦 不限时按量计费包 (适用于轻度/备用)</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              比如购买一次性 100GB/200GB 流量包，无到期时间限制（用完为止）。对于仅用于接收 Telegram 消息、查谷歌学术或运行命令行脚本的用户，一年可能只需要花费二三十元。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-slate-950/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>二、</span>
+          <span>平价机场挑选四大“防跑路”避坑原则</span>
+        </h2>
+        <p>
+          低价机场中存在不少只运营两三个月便拉闸跑路的“月抛平台”。想要避坑，请严格遵循以下原则：
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-slate-300 pl-2">
+          <li><strong>看运营起步年份：</strong> 优先选择运营时间超过 2 年、经历过多轮敏感期审查考验的服务商（如老牌猫系架构的飞猫云与二猫云）。</li>
+          <li><strong>看支持的支付方式与沟通渠道：</strong> 具备完善 Telegram 官方频道与客服工单系统的服务商更值得信赖。</li>
+          <li><strong>切忌一次性充值多年：</strong> 即使优惠力度再大，平价机场也建议先尝试月付或年付低门槛套餐，满意后再续费。</li>
+          <li><strong>看节点倍率透明度：</strong> 警惕部分低价机场设置 5x 或 10x 的高倍率隐藏节点，导致流量瞬间被扣光。</li>
+        </ul>
+      </section>
+
+      <section class="bg-slate-950/60 p-6 rounded-2xl border border-slate-800 space-y-4">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>三、</span>
+          <span>平价机场分流优化与省流量设置技巧</span>
+        </h2>
+        <p>
+          在 Clash Verge Rev 或 Shadowrocket 中，可以通过精细化分流让每一兆流量都花在刀刃上：
+        </p>
+        <ol class="list-decimal list-inside space-y-2 text-slate-300 pl-2">
+          <li><strong>开启大陆白名单直连 (GEOIP,CN)：</strong> 确保淘宝、微信、B站等国内流量完全不经过机场节点，避免浪费配额。</li>
+          <li><strong>屏蔽第三方广告规则 (AdBlock)：</strong> 引入规则集拦截网页广告与视频前置广告，能省下 10% - 15% 的无效流量消耗。</li>
+          <li><strong>客户端一键导入：</strong> 核心推荐机场均支持订阅链接一键拉取，几秒钟即可完成所有节点的智能配置。</li>
+        </ol>
+      </section>
+
+      <!-- Section Four: Related Scenario Internal Links -->
+      <section class="p-6 rounded-2xl bg-emerald-950/20 border border-emerald-800/40 space-y-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          <span>🔗</span>
+          <span>探索更多场景化选型与综合排行榜</span>
+        </h2>
+        <p class="text-xs text-slate-300">
+          除了平价性价比需求外，我们还提供了不同应用场景与多维度算法的完整指南：
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <a href="/recommendations/ai/" class="p-3 bg-slate-900 rounded-xl border border-slate-800 hover:border-emerald-500/40 transition-colors block">
+            <div class="font-bold text-sm text-white mb-1">🤖 AI 生产力与防风控</div>
+            <div class="text-xs text-slate-400">ChatGPT/Claude 双 ISP 住宅纯净 IP</div>
+          </a>
+          <a href="/recommendations/streaming/" class="p-3 bg-slate-900 rounded-xl border border-slate-800 hover:border-emerald-500/40 transition-colors block">
+            <div class="font-bold text-sm text-white mb-1">🎬 8K 晚高峰影音方案</div>
+            <div class="text-xs text-slate-400">YouTube 8K / Netflix 秒开大带宽</div>
+          </a>
+          <a href="/rankings/" class="p-3 bg-slate-900 rounded-xl border border-slate-800 hover:border-emerald-500/40 transition-colors block">
+            <div class="font-bold text-sm text-white mb-1">🏆 28 家机场综合榜单</div>
+            <div class="text-xs text-slate-400">查看编辑部全量评分与排名</div>
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- FAQ Section -->
+    <footer class="mt-12 pt-8 border-t border-slate-800">
+      <h2 class="text-xl font-bold text-white mb-4">❓ 平价机场选购常见问题</h2>
+      <FAQ items={faqs} />
+    </footer>
+
+  </article>
+</BaseLayout>

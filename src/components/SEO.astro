@@ -1,0 +1,78 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  image?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  schema?: any;
+}
+
+const {
+  title = "Clash测评家 | 2026节点测速与背景溯源 - 稳定高速魔法上网/机场梯子测评指南",
+  description = "专注于 Clash、Sing-box 等客户端的高速机场实测与背景起底。深度解析各节点前身历史、IEPL/IPLC 专线稳定性与 4K/8K 晚高峰表现，提供真实客观的魔法上网节点与机场梯子测评排行。",
+  canonical = Astro.url.href,
+  type = 'website',
+  image = 'https://clashceping.homes/og-banner.png',
+  publishedTime,
+  modifiedTime = '2026-10-01T12:00:00+08:00',
+  author = 'Clash测评团队',
+  schema
+} = Astro.props;
+
+// Ensure HTTPS absolute canonical URL
+const canonicalURL = canonical.startsWith('http') 
+  ? canonical 
+  : new URL(canonical, 'https://clashceping.homes').href;
+
+// WebSite JSON-LD Schema
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Clash测评家",
+  "url": "https://clashceping.homes",
+  "description": "2026节点测速与背景溯源 - 稳定高速魔法上网/机场梯子测评指南",
+  "inLanguage": "zh-CN",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Clash测评家",
+    "url": "https://clashceping.homes"
+  }
+};
+---
+
+<!-- Basic Metatags -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- Open Graph Metatags -->
+<meta property="og:site_name" content="Clash测评家" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:type" content={type} />
+<meta property="og:image" content={image} />
+<meta property="og:locale" content="zh_CN" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<!-- Favicon & RSS -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate" type="application/rss+xml" title="Clash测评家 RSS Feed" href="/rss.xml" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(websiteSchema)} />
+{schema && (
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+)}

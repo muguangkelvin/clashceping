@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "纠错与更新政策 - Clash测评家";
+const pageDesc = "详细说明编辑部如何处理用户纠错提交及重大数据更新说明。";
+
+const breadcrumbs = [{ label: '纠错与更新政策' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">纠错与更新政策 (Corrections Policy)</h1>
+    <p>当收到用户提交的机场域名变更、价格微调或套餐重置规则修改时，编辑部将在 24 小时内进行复核，并在公开页面的 `lastChecked` 字段记录更新。</p>
+  </article>
+</BaseLayout>

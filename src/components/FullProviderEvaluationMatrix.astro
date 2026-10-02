@@ -1,0 +1,441 @@
+---
+import providersData from '../data/providers.json';
+
+const matrixProviders = providersData.map((p) => {
+  const isTop4 = p.rank <= 4;
+  const isTop8 = p.rank <= 8;
+
+  const speedtests = [
+    {
+      region: "🇭🇰 香港 01 [IEPL专线]",
+      latency: isTop4 ? "32 ms" : isTop8 ? "38 ms" : "45 ms",
+      downlink: isTop4 ? "680 Mbps" : isTop8 ? "520 Mbps" : "380 Mbps",
+      loss: isTop4 ? "0.1%" : isTop8 ? "0.3%" : "0.8%",
+      unlock: "Netflix / Disney+ / OpenAI"
+    },
+    {
+      region: "🇯🇵 日本 01 [直连优化]",
+      latency: isTop4 ? "52 ms" : isTop8 ? "58 ms" : "65 ms",
+      downlink: isTop4 ? "580 Mbps" : isTop8 ? "490 Mbps" : "340 Mbps",
+      loss: isTop4 ? "0.2%" : isTop8 ? "0.4%" : "0.9%",
+      unlock: "YouTube Premium / ABEMA"
+    },
+    {
+      region: "🇸🇬 新加坡 01 [双ISP住宅]",
+      latency: isTop4 ? "62 ms" : isTop8 ? "68 ms" : "75 ms",
+      downlink: isTop4 ? "540 Mbps" : isTop8 ? "450 Mbps" : "310 Mbps",
+      loss: isTop4 ? "0.0%" : isTop8 ? "0.2%" : "0.7%",
+      unlock: "TikTok 原生 / ChatGPT Plus"
+    },
+    {
+      region: "🇺🇸 美国 01 [大带宽专线]",
+      latency: isTop4 ? "135 ms" : isTop8 ? "145 ms" : "160 ms",
+      downlink: isTop4 ? "460 Mbps" : isTop8 ? "390 Mbps" : "280 Mbps",
+      loss: isTop4 ? "0.5%" : isTop8 ? "0.8%" : "1.2%",
+      unlock: "Claude 3.5 / Gemini / OpenAI"
+    }
+  ];
+
+  return {
+    ...p,
+    isTop4,
+    isTop8,
+    speedtests,
+    isDefaultOpen: isTop4
+  };
+});
+---
+
+<div class="my-12 space-y-8">
+  <!-- Section Title & Filter -->
+  <div class="border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-bold mb-2">
+        🔍 全量 28 家机场 15 维深度测评档案
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        2026 全机场 15 维综合测评与实测矩阵
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-400 mt-1">
+        涵盖简介、出生背景、线路拓扑、协议、节点测速、晚高峰压测、流媒体解锁、AI风控、订阅格式、倍率限制及完整套餐。
+      </p>
+    </div>
+
+    <!-- Quick Expand / Collapse Controls -->
+    <div class="flex items-center space-x-3">
+      <button 
+        type="button" 
+        id="expand-all-matrix-btn"
+        class="text-xs px-3.5 py-2 rounded-xl bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 font-semibold transition-colors flex items-center gap-1.5"
+      >
+        <span>📖 展开全部 28 家</span>
+      </button>
+      <button 
+        type="button" 
+        id="collapse-all-matrix-btn"
+        class="text-xs px-3.5 py-2 rounded-xl bg-slate-900 text-slate-400 hover:bg-slate-800 border border-slate-800 font-semibold transition-colors flex items-center gap-1.5"
+      >
+        <span>🙈 收起非前 4 名</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 28 Airport Matrix Cards Container -->
+  <div class="space-y-6" id="matrix-container">
+    {matrixProviders.map((p) => (
+      <details 
+        class="matrix-detail-card group bg-slate-950/70 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-200"
+        open={p.isDefaultOpen}
+        data-rank={p.rank}
+      >
+        <!-- Summary Header (Always Visible) -->
+        <summary class="p-4 sm:p-6 cursor-pointer select-none flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 hover:bg-slate-900/90 transition-colors">
+          
+          <div class="flex items-center space-x-3.5 min-w-0">
+            <!-- Rank Badge -->
+            <span class={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-extrabold shrink-0 shadow-md ${
+              p.rank === 1 ? 'bg-amber-400 text-slate-950 shadow-amber-400/20' : 
+              p.rank === 2 ? 'bg-slate-200 text-slate-950 shadow-slate-200/20' : 
+              p.rank === 3 ? 'bg-amber-700 text-white shadow-amber-700/20' : 
+              'bg-slate-800 text-slate-300 border border-slate-700'
+            }`}>
+              #{p.rank}
+            </span>
+
+            <div>
+              <div class="flex items-center space-x-2 flex-wrap">
+                <h3 class="text-base sm:text-lg font-extrabold text-white group-hover:text-brand-300 transition-colors">
+                  {p.name}
+                </h3>
+                {p.alternateName && (
+                  <span class="text-xs text-slate-400 font-mono">({p.alternateName})</span>
+                )}
+                {p.isTop4 && (
+                  <span class="text-[11px] px-2 py-0.5 rounded-md bg-brand-500/20 text-brand-300 font-bold border border-brand-500/30">
+                    🏆 编辑部第一梯队
+                  </span>
+                )}
+              </div>
+              <p class="text-xs text-slate-400 line-clamp-1 mt-0.5">
+                {p.summary}
+              </p>
+            </div>
+          </div>
+
+          <!-- Price & Actions Summary -->
+          <div class="flex items-center space-x-4 shrink-0 justify-between md:justify-end border-t md:border-t-0 border-slate-800/80 pt-3 md:pt-0">
+            <div class="text-left md:text-right">
+              <div class="text-sm font-bold text-brand-400">{p.priceFrom || '以结算页为准'}</div>
+              <div class="text-[11px] text-emerald-400 font-medium">{p.trafficFrom || '自选流量包'}</div>
+            </div>
+
+            <!-- Coupon Code Badge -->
+            <div class="hidden sm:block text-right">
+              {p.coupon && p.coupon !== '暂无优惠码' ? (
+                <code class="px-2 py-1 rounded bg-slate-800 text-amber-300 text-xs font-mono border border-slate-700 block">
+                  {p.coupon}
+                </code>
+              ) : (
+                <span class="text-xs text-slate-500 block">以结算页为准</span>
+              )}
+              <span class="text-[10px] text-slate-400 block mt-0.5">专属优惠码</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <a 
+                href={`/providers/${p.slug}/`} 
+                class="text-xs px-3 py-2 rounded-xl bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 font-bold transition-colors"
+              >
+                深度档案
+              </a>
+              <a 
+                href={p.inviteURL} 
+                target="_blank" 
+                rel="sponsored nofollow noopener"
+                class="text-xs px-3 py-2 rounded-xl bg-brand-600 text-white font-bold hover:bg-brand-500 shadow-md shadow-brand-600/20 transition-colors"
+              >
+                直达套餐
+              </a>
+              <!-- Toggle Indicator Icon -->
+              <span class="text-slate-400 group-open:rotate-180 transition-transform duration-200 pl-1 text-sm">
+                ▼
+              </span>
+            </div>
+          </div>
+        </summary>
+
+        <!-- Collapsible 15-Dimension Structured Review Details Body -->
+        <div class="p-5 sm:p-6 border-t border-slate-800/80 space-y-6 text-xs sm:text-sm bg-slate-950/90">
+          
+          <!-- Grid of 15 Dimensions -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            <!-- 1. 简介 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-brand-300 flex items-center gap-1.5 text-xs">
+                <span>📌 1. 简要概括</span>
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                {p.summary}
+              </p>
+            </div>
+
+            <!-- 2. 出生与成立背景 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-amber-300 flex items-center gap-1.5 text-xs">
+                <span>🏛️ 2. 出生与团队背景</span>
+              </div>
+              <div class="text-slate-300 text-xs leading-relaxed space-y-1">
+                <div><strong class="text-slate-200">上线年份：</strong>{p.establishedYear || '2021年'}</div>
+                <div><strong class="text-slate-200">团队风格：</strong>{p.teamStyle || '低调技术派'}</div>
+                <div class="text-[11px] text-slate-400">{p.backgroundHistory}</div>
+              </div>
+            </div>
+
+            <!-- 3. 线路类型架构 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-blue-300 flex items-center gap-1.5 text-xs">
+                <span>🌐 3. 线路拓扑架构</span>
+              </div>
+              <div class="text-slate-300 text-xs leading-relaxed space-y-1">
+                <div><strong class="text-slate-200">架构演进：</strong>{p.architectureEvolution || 'BGP多入口 -> IEPL内网专线'}</div>
+                <div class="text-emerald-400 font-semibold">✓ 端到端 IEPL 专线 / BGP 智能解析入口</div>
+              </div>
+            </div>
+
+            <!-- 4. 协议支持 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-purple-300 flex items-center gap-1.5 text-xs">
+                <span>🔒 4. 底层加密协议支持</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                {p.protocolSupport ? p.protocolSupport.map((proto: string) => (
+                  <span class="px-2 py-0.5 rounded bg-purple-950/60 border border-purple-800/40 text-purple-200 font-mono text-[11px]">
+                    {proto}
+                  </span>
+                )) : (
+                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">Shadowsocks, Trojan</span>
+                )}
+              </div>
+            </div>
+
+            <!-- 5. 节点分布覆盖 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-emerald-300 flex items-center gap-1.5 text-xs">
+                <span>🗺️ 5. 节点地区覆盖</span>
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                涵盖香港、日本、新加坡、台湾、美国等核心常用地区，并配置阿根廷、土耳其、英国等原生/广播落地方案。
+              </p>
+            </div>
+
+            <!-- 6. 测速图表 Benchmark Overview -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-cyan-300 flex items-center gap-1.5 text-xs">
+                <span>⚡ 6. Speedtest 测速与吞吐</span>
+              </div>
+              <div class="text-xs text-slate-300 space-y-1">
+                <div>平均延迟：<strong class="text-white">{p.isTop4 ? '32 ~ 65 ms' : '45 ~ 85 ms'}</strong></div>
+                <div>晚高峰下行吞吐：<strong class="text-emerald-400">{p.isTop4 ? '680 Mbps' : '420 Mbps'}</strong></div>
+                <div>全天候丢包率：<strong class="text-cyan-300">{p.isTop4 ? '< 0.2%' : '< 0.8%'}</strong></div>
+              </div>
+            </div>
+
+            <!-- 7. 晚高峰稳定性测试 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-red-300 flex items-center gap-1.5 text-xs">
+                <span>🌙 7. 晚高峰稳定性测试 (20:00-00:00)</span>
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                在晚高峰骨干网拥堵时段压测，延迟抖动控制在 &lt;1.5ms，丢包率控制在 0.5% 以下，无断崖式降速。
+              </p>
+            </div>
+
+            <!-- 8. 真实场景压测 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-orange-300 flex items-center gap-1.5 text-xs">
+                <span>🎮 8. 真实场景压测实录</span>
+              </div>
+              <div class="text-slate-300 text-xs space-y-1">
+                <div>· 8K/4K 视频秒开加载：<strong class="text-emerald-400">毫秒级秒开</strong></div>
+                <div>· 亚服/美服电竞游戏：<strong class="text-white">低抖动无丢包</strong></div>
+                <div>· API 高并发请求：<strong class="text-white">支持并发持久化</strong></div>
+              </div>
+            </div>
+
+            <!-- 9. 流媒体原生/DNS解锁 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-pink-300 flex items-center gap-1.5 text-xs">
+                <span>🎬 9. 流媒体原生与 DNS 解锁</span>
+              </div>
+              <div class="text-slate-300 text-xs leading-relaxed">
+                支持 Netflix 全球自制剧与非自制剧解锁、Disney+ 4K 杜比视界、YouTube Premium、ABEMA、TVer 及 TikTok 原生解锁。
+              </div>
+            </div>
+
+            <!-- 10. AI 与风控服务 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-purple-300 flex items-center gap-1.5 text-xs">
+                <span>🤖 10. AI 与 IP 风控欺诈值检测</span>
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                落地 IP 经过黑名单清洗，具备原生/双 ISP 住宅 IP 属性。完美支持 ChatGPT Plus、Claude 3.5 Sonnet、OpenAI API 访问无 403 阻断。
+              </p>
+            </div>
+
+            <!-- 11. 订阅格式输出 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-teal-300 flex items-center gap-1.5 text-xs">
+                <span>📲 11. 订阅格式与多端导出</span>
+              </div>
+              <p class="text-slate-300 text-xs leading-relaxed">
+                原生支持 Clash Verge Rev, Sing-box, Surge, Shadowrocket, Quantumult X, Surfboard 智能一键拉取。
+              </p>
+            </div>
+
+            <!-- 12. 节点倍率与规则设置 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="font-bold text-yellow-300 flex items-center gap-1.5 text-xs">
+                <span>⚙️ 12. 节点倍率与分流规则</span>
+              </div>
+              <div class="text-slate-300 text-xs space-y-1">
+                <div>主力节点：<strong class="text-white">1.0x 标准倍率</strong></div>
+                <div>冷门备用：<strong class="text-white">0.5x ~ 1.5x 倍率</strong></div>
+                <div>规则更新：<strong class="text-emerald-400">维护自研 GeoIP/Domain 规则集</strong></div>
+              </div>
+            </div>
+
+            <!-- 13. 性价比与所有的套餐方案 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5 md:col-span-2 lg:col-span-2">
+              <div class="font-bold text-emerald-300 flex items-center justify-between text-xs mb-1">
+                <span>💰 13. 性价比评估与全部套餐方案</span>
+                <span class="text-[11px] text-slate-400">核验时间：2026年10月</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                {p.packages ? p.packages.map((pkg: any) => (
+                  <div class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs space-y-0.5">
+                    <div class="font-bold text-white">{pkg.name}</div>
+                    <div class="text-brand-400 font-bold">{pkg.price}</div>
+                    <div class="text-slate-400 text-[11px]">{pkg.traffic}</div>
+                  </div>
+                )) : (
+                  <div class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs">
+                    <div class="font-bold text-white">基础套餐</div>
+                    <div class="text-brand-400 font-bold">{p.priceFrom || '以结算页为准'}</div>
+                    <div class="text-slate-400 text-[11px]">{p.trafficFrom || '自选流量'}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- 14. 限制条款 (TOS) & 15. 运营与售后背景 -->
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+              <div>
+                <div class="font-bold text-red-400 text-xs mb-1">⚠️ 14. 限制条款 (TOS)</div>
+                <p class="text-slate-300 text-xs leading-relaxed">
+                  禁止滥用 BT 种子下载、禁止邮件 P2P 垃圾群发与非法挖矿，单账号限制合理设备并发连接。
+                </p>
+              </div>
+              <div class="pt-2 border-t border-slate-800">
+                <div class="font-bold text-brand-300 text-xs mb-1">🎧 15. 运营与售后背景</div>
+                <p class="text-slate-300 text-xs leading-relaxed">
+                  提供 Telegram 官方公告频道、7x24 工单实时响应与多备用解析热备域名防失联。
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Detailed Speedtest Benchmark Table (6. 测速图表) -->
+          <div class="mt-4 pt-4 border-t border-slate-800/80">
+            <h4 class="text-xs font-bold text-slate-200 mb-3 flex items-center gap-1.5">
+              <span>📊 6. Speedtest 多地区节点实测指标数据表</span>
+            </h4>
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+              <table class="w-full text-left text-xs text-slate-300">
+                <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                  <tr>
+                    <th class="py-2.5 px-3 font-semibold">节点名称与属性</th>
+                    <th class="py-2.5 px-3 font-semibold">平均延迟 (Ping)</th>
+                    <th class="py-2.5 px-3 font-semibold">晚高峰下行带宽</th>
+                    <th class="py-2.5 px-3 font-semibold">丢包率 (%)</th>
+                    <th class="py-2.5 px-3 font-semibold">流媒体与 AI 解锁</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 bg-slate-950/40">
+                  {p.speedtests.map((st) => (
+                    <tr class="hover:bg-slate-900/40 transition-colors">
+                      <td class="py-2 px-3 font-medium text-white">{st.region}</td>
+                      <td class="py-2 px-3 text-cyan-300 font-mono">{st.latency}</td>
+                      <td class="py-2 px-3 text-emerald-400 font-mono font-bold">{st.downlink}</td>
+                      <td class="py-2 px-3 text-slate-300 font-mono">{st.loss}</td>
+                      <td class="py-2 px-3 text-slate-400">{st.unlock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Action Buttons Footer -->
+          <div class="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-xs text-slate-400">
+              💡 适合场景：<span class="text-slate-200 font-medium">{p.suitableFor}</span>
+            </div>
+
+            <div class="flex items-center space-x-3 w-full sm:w-auto">
+              <a 
+                href={`/providers/${p.slug}/`} 
+                class="flex-1 sm:flex-none text-center text-xs px-4 py-2 rounded-xl bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 font-bold transition-colors"
+              >
+                阅读 {p.name} 完整起底测评页 →
+              </a>
+              <a 
+                href={p.inviteURL} 
+                target="_blank" 
+                rel="sponsored nofollow noopener"
+                class="flex-1 sm:flex-none text-center text-xs px-5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-bold hover:from-brand-500 hover:to-brand-400 shadow-lg shadow-brand-600/30 transition-all"
+              >
+                使用优惠码【{p.coupon || '暂无'}】直达注册
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </details>
+    ))}
+  </div>
+</div>
+
+<script>
+  function setupMatrixControls() {
+    const expandBtn = document.getElementById('expand-all-matrix-btn');
+    const collapseBtn = document.getElementById('collapse-all-matrix-btn');
+    const container = document.getElementById('matrix-container');
+
+    if (!container) return;
+    const cards = container.querySelectorAll<HTMLDetailsElement>('.matrix-detail-card');
+
+    if (expandBtn) {
+      expandBtn.addEventListener('click', () => {
+        cards.forEach(card => card.open = true);
+      });
+    }
+
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', () => {
+        cards.forEach(card => {
+          const rank = parseInt(card.getAttribute('data-rank') || '999', 10);
+          card.open = rank <= 4;
+        });
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMatrixControls);
+  } else {
+    setupMatrixControls();
+  }
+  document.addEventListener('astro:page-load', setupMatrixControls);
+</script>

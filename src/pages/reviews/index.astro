@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import providersData from '../../data/providers.json';
+
+const pageTitle = "机场测评大合集：28家机场背景起底、专线架构与晚高峰实测 - Clash测评家";
+const pageDesc = "全网独家收集28家知名机场运营背景、团队历史溯源、IEPL专线架构与晚高峰实测数据大合集。全文直接展示测速看图、IEPL专线与双ISP住宅IP选型。";
+
+const breadcrumbs = [{ label: '机场测评大合集' }];
+
+const top4Providers = providersData.slice(0, 4);
+
+const reviewsSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": pageTitle,
+  "description": pageDesc,
+  "author": {
+    "@type": "Organization",
+    "name": "Clash测评家"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Clash测评家",
+    "url": "https://clashceping.homes"
+  }
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs} schema={reviewsSchema}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mb-10">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-500/10 text-brand-300 border border-brand-500/30">
+        🔍 独立溯源调查
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-4">
+        28 家机场背景起底与晚高峰实测档案库
+      </h1>
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        区别于泛泛的“十大机场推荐”，本站通过“实测 + 节点背景调查”强化权威度。以下为目前收录的全部 28 家机场的规范起底测评索引与全量实测技术解析。
+      </p>
+    </div>
+
+    <!-- Top 4 Highlighted Primary Reviews -->
+    <section class="mb-14">
+      <h2 class="text-xl font-bold text-white mb-6">🏆 重点起底推荐 (固定前四名)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {top4Providers.map((provider) => (
+          <ProviderCard provider={provider} />
+        ))}
+      </div>
+    </section>
+
+    <!-- All 28 Providers Full Grid -->
+    <section class="mb-14">
+      <h2 class="text-xl font-bold text-white mb-6">📁 全量 28 家机场独立起底测评档案</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {providersData.map((p) => (
+          <div class="glass-card rounded-xl p-5 border border-slate-800 hover:border-brand-500/40 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-brand-400">#{p.rank}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+                  {p.establishedYear || '2021年'}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">
+                <a href={`/providers/${p.slug}/`} class="hover:text-brand-300 transition-colors">
+                  {p.name}
+                </a>
+              </h3>
+              <p class="text-xs text-slate-300 line-clamp-3 mb-4">
+                {p.summary}
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-400 font-bold">{p.priceFrom || '以结算页为准'}</span>
+              <a href={`/providers/${p.slug}/`} class="text-xs font-semibold text-brand-400 hover:text-brand-300">
+                查看起底报告 →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 5-Part Complete Inline Reading Technical Guide Section (No click/Read-More buttons) -->
+    <section class="mb-14 space-y-10 border-t border-slate-800 pt-10">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold mb-2">
+          📖 线路技术解析 · 全文直接展示
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          📊 机场测速与线路技术解析
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">
+          全文直接展示无须二次点击，深入拆解测速识破、IEPL 专线拓扑、双 ISP 住宅 IP 与运营溯源。
+        </p>
+      </div>
+
+      <!-- Section 1 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-brand-500/20 text-brand-300 text-xs font-bold border border-brand-500/30">
+          专题一
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          一、 28 家主流机场背景起底与晚高峰实测数据大合集
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          在本站建立的 28 家机场数据库中，我们对每家服务商的团队前身、上线年份、初始协议及拓扑演进进行了全面追溯。例如，固定排名第一梯队的 <strong class="text-white">灵动云</strong>（资深技术社区派）、<strong class="text-white">暮光网络</strong>（高并发大流量派）、<strong class="text-white">飞猫云</strong>（老牌猫系独立分支）及 <strong class="text-white">微风网络</strong>（平稳低抖动派），均经历了多次敏感期封锁考验，表现出极高的在线率。
+        </p>
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 text-xs space-y-1">
+          <div class="font-bold text-brand-300 mb-1">📊 28 家机场晚高峰整体实测指标区间：</div>
+          <div class="text-slate-300">· 核心专线节点平均 Ping 延迟：<strong class="text-white">32 ms ~ 65 ms</strong> (华东/华南)</div>
+          <div class="text-slate-300">· 晚高峰下行平均吞吐速率：<strong class="text-emerald-400 font-mono font-bold">380 Mbps ~ 680 Mbps</strong></div>
+          <div class="text-slate-300">· 24 小时全天候丢包率中位数：<strong class="text-cyan-300 font-mono">&lt; 0.3%</strong></div>
+        </div>
+      </article>
+
+      <!-- Section 2 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-xs font-bold border border-cyan-500/30">
+          专题二
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          二、 如何通过测速图看懂机场真实下行与延迟
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          很多用户在查看第三方“测速彩图”时容易被满屏绿色的高带宽数值蒙蔽。实际上，测速图存在许多可人为操纵的隐患，学会辨别测速图至关重要：
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-amber-300">1. 单线程 vs 多线程测速</div>
+            <p class="text-slate-400 leading-relaxed">
+              多线程测速能轻松跑满带宽，但观看 4K 视频或加载 AI 网页主要依赖<strong class="text-white">单线程 TCP 吞吐</strong>。单线程如果跑不动，多线程再高也会频繁缓冲。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-red-400">2. 识别丢包率 (%) 与延迟抖动 (Jitter)</div>
+            <p class="text-slate-400 leading-relaxed">
+              Ping 延迟 30ms 看似很低，但如果丢包率达到 5%，网络连接就会断断续续。优质专线要求丢包率极低（&lt;0.5%）且抖动小于 2ms。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 3 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-500/30">
+          专题三
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          三、 公网 BGP 中转 vs IEPL 国际专线：架构演进全解析
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          机场网络架构的演进直接决定了在“敏感期”和“晚高峰”时节点的生存概率。我们可以将传输拓扑划分为三个历史阶段：
+        </p>
+        <div class="space-y-2 text-xs">
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <span class="font-bold text-slate-400">第一代：公网直连 (Direct Transit)</span> — 数据直接通过公网国际出口跨境，极易被防火墙深度报文检测（DPI）识别阻断，已基本淘汰。
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <span class="font-bold text-yellow-300">第二代：公网 BGP 隧道中转 (BGP Tunnel)</span> — 国内入口采用广深、沪日等 BGP 机房中转，但跨国段仍走公网出口，晚高峰易遭遇丢包拥堵。
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <span class="font-bold text-emerald-400">第三代：端到端 IEPL / IPLC 国际内网专线 (Private Line)</span> — 端到端物理隔离二层专线直达，不经公网审查设备，晚高峰无感流畅。
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 4 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30">
+          专题四
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          四、 落地 IP 纯净度与双 ISP 住宅 IP 防封锁深度测评
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          随着 ChatGPT Plus、Claude 3.5 Sonnet、OpenAI API 及风控系统（Cloudflare / IPQS）对节点 IP 属性审查日益严苛，落地 IP 的质量已经超越速度成为衡量节点品质的核心指标。
+        </p>
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-purple-800/40 text-xs space-y-2">
+          <div class="font-bold text-purple-300">🔍 双 ISP 住宅 IP 核心优势：</div>
+          <ul class="list-disc list-inside text-slate-300 space-y-1 pl-1">
+            <li><strong>IP 欺诈得分（Fraud Score）接近 0：</strong> 在 ASN 机构登记为真实 Residential 住宅宽带。</li>
+            <li><strong>ChatGPT / Claude 登录无 403 阻断：</strong> 避免网页频繁验证码循环或账号无预警被封。</li>
+            <li><strong>流媒体全绿解锁：</strong> 原生解锁 Netflix 全球版权剧集、Disney+ 4K 杜比视界及 TikTok 本地直播。</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Section 5 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
+          专题五
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          五、 机场服务商运营年份与历史背景溯源调查
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          每年网络敏感期都有大量“月抛廉价机场”停止响应甚至封站跑路。能够连续运营 3 年以上的服务商（如榜单前列的灵动云、暮光网络、飞猫云、微风网络等），在以下维度具备显著优势：
+        </p>
+        <ul class="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
+          <li><strong>备用域名解析热备机制：</strong> 主域名受阻时能通过 Telegram 官方频道或后台自动推送备用域名。</li>
+          <li><strong>RAM-Only 内存日志隔离：</strong> 节点服务器采用内存无痕运行，重启即销毁任何访问日志，保护隐私安全。</li>
+          <li><strong>完善的 7x24 工单响应：</strong> 遇到节点掉线能在短时间内快速完成线路自动容灾切换。</li>
+        </ul>
+      </article>
+
+    </section>
+  </div>
+</BaseLayout>

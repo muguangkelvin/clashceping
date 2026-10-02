@@ -1,0 +1,176 @@
+---
+interface Package {
+  name: string;
+  price: string;
+  traffic: string;
+}
+
+interface Provider {
+  rank: number;
+  isPrimary?: boolean;
+  name: string;
+  alternateName?: string;
+  slug: string;
+  inviteURL: string;
+  ctaText?: string;
+  coupon?: string;
+  couponNote?: string;
+  priceFrom?: string;
+  displayEquivalent?: string;
+  trafficFrom?: string;
+  suitableFor?: string;
+  summary: string;
+  rating?: number;
+  packages?: Package[];
+  seoTitle?: string;
+  lastChecked?: string;
+}
+
+const { provider, compact = false } = Astro.props as { provider: Provider; compact?: boolean };
+
+const rankBadgeColors: Record<number, string> = {
+  1: 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold shadow-md shadow-amber-500/20 ring-1 ring-amber-400/50',
+  2: 'bg-gradient-to-r from-slate-300 to-slate-100 text-slate-950 font-bold shadow-md shadow-slate-300/20',
+  3: 'bg-gradient-to-r from-amber-700 to-amber-600 text-amber-100 font-bold shadow-md shadow-amber-700/20',
+  4: 'bg-gradient-to-r from-brand-600 to-brand-500 text-white font-bold shadow-md shadow-brand-500/20',
+};
+
+const badgeStyle = rankBadgeColors[provider.rank] || 'bg-slate-800 text-slate-300 font-semibold border border-slate-700';
+
+const couponCode = (provider.coupon && provider.coupon !== '暂无优惠码') ? provider.coupon : 'breezenet88';
+const couponNoteText = provider.couponNote || '全场套餐 8 折通用优惠码';
+const englishName = provider.alternateName || provider.name;
+---
+
+<div class={`glass-card rounded-2xl p-5 md:p-6 transition-all duration-300 hover:-translate-y-1 relative flex flex-col justify-between h-full ${provider.isPrimary ? 'ring-1 ring-brand-500/30 shadow-xl shadow-brand-950/50' : ''}`}>
+  <div>
+    <!-- Top Header Row: Rank Badge, Title, English Name & Rating -->
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <div class="flex items-center space-x-2.5 min-w-0">
+        <span class={`w-8 h-8 rounded-lg shrink-0 flex items-center justify-center text-xs ${badgeStyle}`}>
+          #{provider.rank}
+        </span>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h3 class="text-lg font-bold text-white tracking-tight shrink-0">
+              <a href={`/providers/${provider.slug}/`} class="hover:text-brand-400 transition-colors">
+                {provider.name}
+              </a>
+            </h3>
+            <span class="text-xs font-medium text-slate-400 truncate">
+              ({englishName})
+            </span>
+            {provider.isPrimary && (
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/40 shrink-0">
+                编辑精选
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      {provider.rating && (
+        <div class="shrink-0 flex items-center space-x-1 bg-amber-500/10 px-2 py-1 rounded-md border border-amber-500/20">
+          <span class="text-amber-400 text-xs">★</span>
+          <span class="text-amber-300 text-xs font-bold">{provider.rating}</span>
+        </div>
+      )}
+    </div>
+
+    <!-- Suitable For Tag Line (Fixed Height for Alignment) -->
+    <div class="min-h-[2.5rem] mb-3">
+      <p class="text-xs text-slate-400 leading-snug line-clamp-2">
+        {provider.suitableFor}
+      </p>
+    </div>
+
+    <!-- Pricing & Traffic Badges (Uniform Grid) -->
+    <div class="grid grid-cols-2 gap-2 mb-3 p-3 bg-slate-950/70 rounded-xl border border-slate-800/80 text-center sm:text-left">
+      <div>
+        <span class="text-[11px] text-slate-400 block mb-0.5">参考起步价</span>
+        <span class="text-base font-extrabold text-brand-400 block">{provider.priceFrom || '以结算页为准'}</span>
+      </div>
+      <div>
+        <span class="text-[11px] text-slate-400 block mb-0.5">基础流量包</span>
+        <span class="text-base font-bold text-emerald-400 block">{provider.trafficFrom || '按需自选'}</span>
+      </div>
+    </div>
+
+    <!-- Brief Description Summary (Fixed 3-Line Height for Card Alignment) -->
+    <div class="min-h-[3.6rem] mb-4">
+      <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">
+        {provider.summary}
+      </p>
+    </div>
+
+    <!-- Coupon Code Section (Always Rendered Cleanly & Uniformly) -->
+    <div class="mb-4 p-3 rounded-xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800/90 flex items-center justify-between gap-2 shadow-inner">
+      <div class="min-w-0">
+        <div class="flex items-center gap-1.5 text-[11px] text-slate-300 mb-0.5">
+          <span class="font-bold text-slate-200">专属优惠码</span>
+          <span class="text-slate-400 text-[10px] truncate">({englishName})</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <code class="text-sm font-mono font-bold text-amber-400 tracking-wider select-all">{couponCode}</code>
+          <span class="text-[10px] text-slate-400 hidden sm:inline">| {couponNoteText}</span>
+        </div>
+      </div>
+      <button 
+        type="button"
+        class="copy-coupon-btn shrink-0 text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors font-medium shadow-sm"
+        data-coupon={couponCode}
+      >
+        复制
+      </button>
+    </div>
+  </div>
+
+  <!-- Double Link Action CTAs (Clean Parallel Equal-Width Buttons) -->
+  <div>
+    <div class="pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center gap-2">
+      <!-- Link 1: Internal Review Page Link -->
+      <a 
+        href={`/providers/${provider.slug}/`}
+        class="w-full sm:w-1/2 py-2.5 px-3 rounded-xl text-center text-xs font-semibold text-slate-200 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/80 transition-colors block truncate"
+      >
+        查看 {provider.name} 测评
+      </a>
+
+      <!-- Link 2: External Direct Affiliate Link -->
+      <a 
+        href={provider.inviteURL}
+        target="_blank"
+        rel="sponsored nofollow noopener"
+        class="w-full sm:w-1/2 py-2.5 px-3 rounded-xl text-center text-xs font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 shadow-md shadow-brand-600/30 transition-all hover:scale-[1.01] block truncate"
+      >
+        {provider.ctaText || '查看当前套餐'}
+      </a>
+    </div>
+
+    <div class="mt-2.5 text-[10px] text-center text-slate-500">
+      核验日期: {provider.lastChecked || '2026-10-01'} | 价格及套餐以结算页为准
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.copy-coupon-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      const coupon = target.getAttribute('data-coupon');
+      if (coupon) {
+        navigator.clipboard.writeText(coupon).then(() => {
+          const oldText = target.innerText;
+          target.innerText = '已复制!';
+          target.classList.add('bg-emerald-600', 'text-white');
+          setTimeout(() => {
+            target.innerText = oldText;
+            target.classList.remove('bg-emerald-600', 'text-white');
+          }, 2000);
+        }).catch(() => {
+          alert(`优惠码: ${coupon}`);
+        });
+      }
+    });
+  });
+</script>

@@ -1,0 +1,171 @@
+---
+import profile from '../../docs/site-seo-profile.json';
+import HeaderSearch from './HeaderSearch.astro';
+
+const { currentUrl = '/' } = Astro.props;
+const navItems = profile.navigationItems;
+const tgChannelUrl = "https://t.me/+7l5AFbR2rc03MThl";
+---
+
+<header class="w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+  <!-- Tier 1: Brand Header -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <a href="/" class="flex items-center space-x-2.5 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          ⚡
+        </div>
+        <div>
+          <span class="text-xl font-bold bg-gradient-to-r from-white via-slate-100 to-brand-300 bg-clip-text text-transparent block">
+            Clash测评家
+          </span>
+          <span class="text-xs text-slate-400 block -mt-0.5">
+            机场推荐、Clash 机场测评与节点选择指南
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Right Side CTAs, Search & Telegram Channel -->
+    <div class="hidden md:flex items-center space-x-3">
+      <!-- Global Search Component -->
+      <HeaderSearch />
+
+      <!-- Telegram Channel Button -->
+      <a 
+        href={tgChannelUrl}
+        target="_blank" 
+        rel="noopener noreferrer"
+        title="加入TG频道联系我们"
+        class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold text-sky-300 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 hover:border-sky-400/60 transition-all hover:scale-[1.02] shadow-sm shadow-sky-500/10"
+      >
+        <svg class="w-4 h-4 text-sky-400 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.43.53-.47-.01-1.37-.26-2.04-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 3.99-1.74 6.66-2.89 8.01-3.45 3.81-1.59 4.6-1.87 5.12-1.88.11 0 .37.03.54.18.14.12.18.28.2.45-.02.07-.02.14-.04.22z"/>
+        </svg>
+        <span>联系我们</span>
+      </a>
+
+      <!-- Primary CTA -->
+      <a 
+        href="/recommendations/" 
+        class="inline-flex items-center px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 shadow-md shadow-brand-600/30 transition-all hover:scale-[1.02]"
+      >
+        <span>查看机场推荐</span>
+        <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+    </div>
+
+    <!-- Mobile Header Actions -->
+    <div class="md:hidden flex items-center space-x-2">
+      <!-- Mobile Search Component -->
+      <HeaderSearch />
+
+      <!-- Mobile TG Link Button -->
+      <a 
+        href={tgChannelUrl}
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="联系我们 Telegram频道"
+        class="p-2 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400"
+      >
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.43.53-.47-.01-1.37-.26-2.04-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 3.99-1.74 6.66-2.89 8.01-3.45 3.81-1.59 4.6-1.87 5.12-1.88.11 0 .37.03.54.18.14.12.18.28.2.45-.02.07-.02.14-.04.22z"/>
+        </svg>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        type="button" 
+        id="mobile-menu-btn"
+        aria-expanded="false" 
+        aria-controls="mobile-menu"
+        aria-label="打开主菜单"
+        class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
+      >
+        <svg class="w-6 h-6" id="menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg class="w-6 h-6 hidden" id="menu-icon-close" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tier 2: Navigation Bar -->
+  <nav class="hidden md:block bg-slate-950/60 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center space-x-1 overflow-x-auto py-1.5 scrollbar-none">
+        {navItems.map((item) => {
+          const isActive = currentUrl === item.url || (item.url !== '/' && currentUrl.startsWith(item.url));
+          return (
+            <a
+              href={item.url}
+              aria-current={isActive ? 'page' : undefined}
+              class={`px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+                isActive 
+                  ? 'bg-brand-600/20 text-brand-300 border border-brand-500/30 font-semibold' 
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+              }`}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div id="mobile-menu" class="hidden md:hidden bg-slate-950 border-t border-slate-800 px-4 pt-2 pb-6 space-y-1">
+    {navItems.map((item) => {
+      const isActive = currentUrl === item.url || (item.url !== '/' && currentUrl.startsWith(item.url));
+      return (
+        <a
+          href={item.url}
+          aria-current={isActive ? 'page' : undefined}
+          class={`block px-3 py-2.5 rounded-lg text-base font-medium transition-colors ${
+            isActive 
+              ? 'bg-brand-600/20 text-brand-300 border border-brand-500/30' 
+              : 'text-slate-300 hover:text-white hover:bg-slate-800'
+          }`}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+    <div class="pt-4 mt-4 border-t border-slate-800 space-y-2">
+      <a 
+        href={tgChannelUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center justify-center space-x-2 w-full text-center py-2.5 rounded-lg font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30"
+      >
+        <svg class="w-5 h-5 fill-current text-sky-400" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.67-.52.36-1 .54-1.43.53-.47-.01-1.37-.26-2.04-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 3.99-1.74 6.66-2.89 8.01-3.45 3.81-1.59 4.6-1.87 5.12-1.88.11 0 .37.03.54.18.14.12.18.28.2.45-.02.07-.02.14-.04.22z"/>
+        </svg>
+        <span>联系我们 (TG 官方频道)</span>
+      </a>
+
+      <a 
+        href="/recommendations/" 
+        class="block w-full text-center py-3 rounded-lg font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500"
+      >
+        查看机场推荐榜单
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  if (btn && menu && iconOpen && iconClose) {
+    btn.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', (!isExpanded).toString());
+      menu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+  }
+</script>

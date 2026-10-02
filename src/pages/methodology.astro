@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "测评方法论：测试环境、指标权重与测速逻辑 - Clash测评家";
+const pageDesc = "透明公开晚高峰丢包率压测、下行带宽 Mbps 计算与客户端测试变量。";
+
+const breadcrumbs = [{ label: '测评方法论' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">测评方法论 (Methodology)</h1>
+
+    <h2 class="text-lg font-bold text-white mt-6 mb-3">一、 测试环境标准配置</h2>
+    <ul class="list-disc list-inside space-y-1">
+      <li><strong>客户端软件</strong>：Clash Verge Rev (最新稳定版) & Sing-box (Tun 模式)</li>
+      <li><strong>测试宽带环境</strong>：广东千兆联通 FTTH / 华东千兆电信 BGP</li>
+      <li><strong>测试时间窗口</strong>：晚高峰 20:00 - 00:00 黄金拥堵时段</li>
+    </ul>
+
+    <h2 class="text-lg font-bold text-white mt-6 mb-3">二、 指标计算权重</h2>
+    <ul class="list-disc list-inside space-y-1">
+      <li>晚高峰二层专线丢包率控制 (权重 35%)</li>
+      <li>多PoP入口BGP冗余抗封锁表现 (权重 30%)</li>
+      <li>原生与双 ISP 住宅 IP 纯净度 (权重 20%)</li>
+      <li>性价比与多端客户端兼容性 (权重 15%)</li>
+    </ul>
+  </article>
+</BaseLayout>

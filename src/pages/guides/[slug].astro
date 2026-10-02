@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import RelatedContent from '../../components/RelatedContent.astro';
+import providersData from '../../data/providers.json';
+
+export async function getStaticPaths() {
+  const guides = [
+    {
+      slug: 'beginner-guide',
+      title: '零基础小白第一次购买机场与配置Clash全流程',
+      desc: '手把手教你如何选套餐、注册账号、复制订阅链接并完成第一连接。',
+      category: '新手教程'
+    },
+    {
+      slug: 'traffic-guide',
+      title: '如何看懂套餐流量、计费周期与节点倍率',
+      desc: '拆解按月重置流量与一次性不限时流量包的成本换算算法。',
+      category: '新手教程'
+    },
+    {
+      slug: 'plan-calculator',
+      title: '根据家庭设备数与使用场景精准计算流量需求',
+      desc: '预估4K追剧、网页办公与AI工具交互的实际GB耗费量。',
+      category: '新手教程'
+    },
+    {
+      slug: 'pre-purchase-checklist',
+      title: '购买机场前必看检查清单与风险防范',
+      desc: '避免遇到跑路机场、虚标无限流量与端口封锁的六大防坑法则。',
+      category: '新手教程'
+    },
+    {
+      slug: 'multi-platform',
+      title: 'Windows/macOS/iOS/Android四端订阅一键拉取',
+      desc: '不同系统平台客户端推荐与一键导入配置命令。',
+      category: '新手教程'
+    }
+  ];
+
+  return guides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide }
+  }));
+}
+
+const { guide } = Astro.props;
+
+const pageTitle = `${guide.title} - Clash测评家`;
+const pageDesc = guide.desc;
+
+const breadcrumbs = [
+  { label: '新手教程', url: '/guides/' },
+  { label: guide.title }
+];
+
+const top4Providers = providersData.slice(0, 4);
+
+const guideFaqs = [
+  { question: "第一次使用 Clash 提示 Timeout 超时怎么办？", answer: "请核对订阅链接是否完整复制，检查本地防火墙或杀毒软件是否拦截了 Clash 进程，并在软件设置中尝试更换不同的代理节点。" },
+  { question: "订阅链接拉取失败，显示 DNS 错误怎么处理？", answer: "部分网络环境可能存在域名 DNS 污染，可在 Clash 设置中将 DNS 修改为 223.5.5.5 或 1.1.1.1，或联系机场客服获取最新的备用订阅地址。" }
+];
+
+const relatedArticles = [
+  { title: "2026年最新老牌稳定机场推荐指南", summary: "对比各主流机场的专线架构与晚高峰表现", url: "/recommendations/" },
+  { title: "性价比机场推荐：按预算与流量选择", summary: "如何用最低成本选到跑满千兆带宽的机场", url: "/recommendations/value/" },
+  { title: "Clash Verge Rev 适配机场与一键订阅教程", summary: "全平台 Clash 客户端零基础导入与规则集调优", url: "/recommendations/clash/" }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Header -->
+    <header class="mb-8 border-b border-slate-800 pb-6">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold mb-3">
+        <span>【新手入门指南】</span>
+        <span>•</span>
+        <span>阅读时间：约 6 分钟</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">
+        {guide.title}
+      </h1>
+
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        {guide.desc}
+      </p>
+    </header>
+
+    <!-- Main Guide Body -->
+    <div class="prose prose-invert max-w-none text-slate-300 text-sm md:text-base leading-relaxed space-y-6">
+      
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-white">一、 用户要解决的核心问题</h2>
+        <p>
+          在第一次接触网络节点与 Clash / Sing-box 客户端时，很多小白用户容易被“订阅链接”、“BGP中转”、“IEPL专线”及“规则集分流”等专业术语搞糊涂。本教程旨在用最通俗易懂的语言，拆解从挑选机场套餐到完成节点一键导入的完整闭环。
+        </p>
+      </section>
+
+      <section class="space-y-3 pt-4 border-t border-slate-800">
+        <h2 class="text-xl font-bold text-white">二、 开始前准备工作</h2>
+        <ol class="list-decimal list-inside space-y-2 text-slate-300 pl-2">
+          <li><strong>准备常用客户端</strong>：Windows/macOS 系统建议下载 Clash Verge Rev 或 Sing-box；iOS 设备需在 App Store 准备 Shadowrocket (小火箭)；Android 设备建议准备 Surfboard。</li>
+          <li><strong>准备一个常用邮箱</strong>：用于接收机场注册验证码与后台管理账单。</li>
+          <li><strong>选购合适的专线机场套餐</strong>：根据个人每月实际消耗的流量（如网页办公选择 50GB-150GB/月，8K追剧建议选择 300GB/月以上）。</li>
+        </ol>
+      </section>
+
+      <!-- Fixed Top-4 Providers Recommendation Section -->
+      <section class="my-8 p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
+        <h3 class="text-lg font-bold text-white mb-4">💡 推荐使用的四项老牌专线机场 (固定前四名)</h3>
+        <p class="text-xs text-slate-300 mb-6">配置客户端前，需先在后台获取订阅链接。以下四家老牌机场在客户端适配与一键拉取方面极其流畅：</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {top4Providers.map((p) => (
+            <ProviderCard provider={p} compact={true} />
+          ))}
+        </div>
+      </section>
+
+      <section class="space-y-3 pt-4 border-t border-slate-800">
+        <h2 class="text-xl font-bold text-white">三、 分步骤配置与订阅一键拉取</h2>
+        <ol class="list-decimal list-inside space-y-3 text-slate-300 pl-2">
+          <li><strong>步骤 1：复制订阅链接</strong>：登录机场用户后台，找到“订阅管理”或“一键导入”，点击“复制 Clash 订阅链接”。</li>
+          <li><strong>步骤 2：导入客户端</strong>：打开 Clash Verge Rev，点击左侧菜单栏中的“订阅 (Profiles)”，在上方 URL 输入框中粘贴刚才复制的链接，点击“导入 (Import)”。</li>
+          <li><strong>步骤 3：开启系统代理与 Tun 模式</strong>：在设置页面勾选“系统代理 (System Proxy)”，如需要接管游戏流量可同时开启“Tun 模式”。</li>
+          <li><strong>步骤 4：测试节点连通性</strong>：进入“代理 (Proxies)”页面，点击右上角闪电图标测试节点延迟 (Ping)，选择香港或日本节点即可畅快冲浪。</li>
+        </ol>
+      </section>
+
+      <section class="space-y-3 pt-4 border-t border-slate-800">
+        <h2 class="text-xl font-bold text-white">四、 常见故障排查与安全提醒</h2>
+        <ul class="list-disc list-inside space-y-2 text-slate-300 pl-2">
+          <li><strong>提示 Timeout 延迟超时</strong>：检查本地网络是否正常，或尝试在机场后台重置订阅链接。</li>
+          <li><strong>部分网页打不开</strong>：检查客户端分流规则是否选择为“Rule (规则模式)”，避免误将国内网站走代理。</li>
+          <li><strong>保护个人 Token 隐私</strong>：切勿将自己的订阅 URL 分享给他人或在未经加密的第三方转换网站粘贴。</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- FAQ Component -->
+    <div class="mt-10">
+      <h3 class="text-lg font-bold text-white mb-4">❓ 常见配置问题疑问解答</h3>
+      <FAQ items={guideFaqs} />
+    </div>
+
+    <!-- Related Articles -->
+    <RelatedContent articles={relatedArticles} />
+  </article>
+</BaseLayout>

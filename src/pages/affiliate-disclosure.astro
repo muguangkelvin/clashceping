@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "联盟营销与推广合作透明披露 - Clash测评家";
+const pageDesc = "详细说明本站邀请链接收益机制与编辑独立性保障。";
+
+const breadcrumbs = [{ label: '联盟营销披露' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">联盟营销与推广合作透明披露</h1>
+    <p>为了维持本站测试服务器、带宽消耗及域名运营成本，本站部分按钮与卡片包含合作邀请链接。当读者通过本站链接前往第三方机场官网注册下单时，本站可能获得一定比例的推广奖励。</p>
+    <p>该合作奖励不会增加读者购买套餐的任何额外成本。且所有的推荐理由与优点剖析均基于真实数据。</p>
+  </article>
+</BaseLayout>

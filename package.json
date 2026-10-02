@@ -1,0 +1,31 @@
+{
+  "name": "clashceping-homes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/generate-search-index.cjs && astro dev",
+    "start": "astro dev",
+    "build": "node scripts/generate-search-index.cjs && npx astro build && node scripts/seo-check.cjs",
+    "preview": "astro preview",
+    "astro": "astro",
+    "seo-check": "node scripts/seo-check.cjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.1",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^6.0.0",
+    "astro": "^5.4.2",
+    "fuse.js": "^7.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.17",
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@types/three": "^0.174.0"
+  }
+}

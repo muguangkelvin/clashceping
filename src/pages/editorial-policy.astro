@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "编辑原则：独立性、客观性与事实核验标准 - Clash测评家";
+const pageDesc = "详解 Clash测评家 在选题、机场起底、测速采样与商业合作隔离方面的编辑准则。";
+
+const breadcrumbs = [{ label: '编辑原则' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">编辑原则 (Editorial Policy)</h1>
+
+    <h2 class="text-lg font-bold text-white mt-6 mb-3">一、 独立性与客观性</h2>
+    <p>编辑部在进行机场起底测评时，坚守事实客观原则。商业合作绝不能改变编辑部对机场线路缺点、偶发断流或价格限制的如实披露。</p>
+
+    <h2 class="text-lg font-bold text-white mt-6 mb-3">二、 事实核验与最后更新日期</h2>
+    <p>所有涉及套餐价格、流量额度与优惠码的字段，均保留显式的 `lastChecked` 校验标记。若市场价格发生调整，公开页面将引导用户以最终结算页为准。</p>
+
+    <h2 class="text-lg font-bold text-white mt-6 mb-3">三、 绝不发布虚假保证</h2>
+    <p>编辑部严禁使用“保证100%不被封”、“全网永久第一”、“绝对零丢包”等无法支持的夸张话术。</p>
+  </article>
+</BaseLayout>

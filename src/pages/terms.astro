@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "服务条款 (Terms of Service) - Clash测评家";
+const pageDesc = "本站使用与浏览相关服务条款。";
+
+const breadcrumbs = [{ label: '服务条款' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">服务条款 (Terms of Service)</h1>
+    <p>访问与使用本站即表示您同意本条款。本站提供的内容仅供网络技术交流、学术科研与远程办公参考。</p>
+  </article>
+</BaseLayout>

@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import RelatedContent from '../../components/RelatedContent.astro';
+import faqsData from '../../data/faqs.json';
+import providersData from '../../data/providers.json';
+
+export async function getStaticPaths() {
+  return faqsData.map((faq) => ({
+    params: { slug: faq.slug },
+    props: { faq },
+  }));
+}
+
+const { faq } = Astro.props;
+
+const pageTitle = `${faq.questionTitle} - Clash测评家 FAQ 疑难解答`;
+const pageDesc = `针对“${faq.questionTitle}”提供权威专业的解答。包含场景说明、客户端适配避坑指南及 2026 优质专线机场推荐。`;
+
+const breadcrumbs = [
+  { label: 'FAQ 疑难解答', url: '/faq/' },
+  { label: faq.questionTitle }
+];
+
+const top4Providers = providersData.slice(0, 4);
+
+const relatedArticles = [
+  { title: "2026年最新老牌稳定机场推荐指南", summary: "对比各主流机场的专线架构与晚高峰表现", url: "/recommendations/" },
+  { title: "性价比机场推荐：按预算与流量选择", summary: "如何用最低成本选到跑满千兆带宽的机场", url: "/recommendations/value/" },
+  { title: "Clash Verge Rev 适配机场与一键订阅教程", summary: "全平台 Clash 客户端零基础导入与规则集调优", url: "/recommendations/clash/" }
+];
+
+// Helper function to format raw markdown answer into clean structured HTML
+function formatFaqAnswer(rawAnswer: string) {
+  if (!rawAnswer) return { directAnswer: '', bodyHtml: '' };
+
+  // Split into direct conclusion and sub-sections
+  const parts = rawAnswer.split(/\n(?=###\s+)/);
+  let directAnswerText = parts[0]
+    .replace(/^对于问题“.*?”，核心结论是：/, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\[(.*?)\]\((.*?)\)/g, '$1')
+    .trim();
+
+  const bodyParts = parts.slice(1).join('\n\n');
+
+  let bodyHtml = bodyParts
+    // Convert ### Headings to structured H2 tags
+    .replace(/^###\s+(.*$)/gim, '<h2 class="text-xl font-bold text-white mt-8 mb-4 border-b border-slate-800 pb-2 flex items-center gap-2"><span>📌</span> <span>$1</span></h2>')
+    // Bold **text**
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+    // Links [text](url)
+    .replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
+      const isExternal = url.startsWith('http');
+      return `<a href="${url}" class="text-brand-400 font-bold hover:underline inline-flex items-center gap-1" ${isExternal ? 'target="_blank" rel="sponsored nofollow noopener"' : ''}><span>${text}</span></a>`;
+    })
+    // Bullet lists * item
+    .replace(/^\*\s+(.*$)/gim, '<li class="ml-4 list-disc text-slate-300 my-2 leading-relaxed">$1</li>')
+    // Numbered lists 1. item
+    .replace(/^\d+\.\s+(.*$)/gim, '<li class="ml-4 list-decimal text-slate-300 my-2 leading-relaxed">$1</li>');
+
+  const paragraphs = bodyHtml.split(/\n\n+/);
+  bodyHtml = paragraphs.map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (p.startsWith('<h2') || p.startsWith('<li')) return p;
+    return `<p class="my-3 leading-relaxed text-slate-300">${p}</p>`;
+  }).join('\n');
+
+  return { directAnswer: directAnswerText, bodyHtml };
+}
+
+const { directAnswer, bodyHtml } = formatFaqAnswer(faq.answer);
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <header class="mb-8 border-b border-slate-800 pb-6">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold mb-3">
+        <span>【FAQ 专题问答】</span>
+        <span>•</span>
+        <span>归类：{faq.cluster}</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-4">
+        ❓ {faq.questionTitle}
+      </h1>
+
+      <div class="text-xs text-slate-400 bg-slate-950/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+        <span>主关键词：<strong class="text-brand-300">{faq.primaryKeyword}</strong></span>
+        <span>核验日期：{faq.lastChecked}</span>
+      </div>
+    </header>
+
+    <!-- Main FAQ Answer Body -->
+    <div class="prose prose-invert max-w-none text-slate-300 text-sm md:text-base leading-relaxed space-y-6">
+      
+      <!-- Cleaned & Optimized "核心结论与直接回答" Block -->
+      <div class="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 text-slate-200 leading-relaxed shadow-xl space-y-2">
+        <h2 class="text-base font-bold text-brand-300 flex items-center gap-2">
+          <span>📌</span>
+          <span>核心结论与直接回答</span>
+        </h2>
+        <p class="text-sm md:text-base text-slate-200 leading-relaxed pt-1">
+          {directAnswer}
+        </p>
+      </div>
+
+      <!-- Rendered Structured Section Body -->
+      {bodyHtml ? (
+        <div class="space-y-6 pt-2" set:html={bodyHtml} />
+      ) : (
+        <section class="space-y-3 pt-4 border-t border-slate-800">
+          <h2 class="text-xl font-bold text-white">一、 背景原理解析与底层机制</h2>
+          <p>
+            在使用代理协议（Shadowsocks / Trojan / Hysteria 2）及客户端（Clash Verge Rev / Sing-box / Shadowrocket）时，网络传输的抖动与延迟主要受国内 BGP 前置接入点、IEPL 国际内网专线及海外落地机房 IP 纯净度的三重影响。
+          </p>
+        </section>
+      )}
+
+      <!-- Fixed Top-4 Providers Block -->
+      <section class="my-8 p-6 rounded-2xl bg-slate-950/80 border border-slate-800">
+        <h3 class="text-lg font-bold text-white mb-4">💡 匹配此疑问的四项优质专线机场 (固定前四名)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {top4Providers.map((p) => (
+            <ProviderCard provider={p} compact={true} />
+          ))}
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Related Articles -->
+    <RelatedContent articles={relatedArticles} />
+  </article>
+</BaseLayout>

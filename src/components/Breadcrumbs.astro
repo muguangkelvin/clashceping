@@ -1,0 +1,48 @@
+---
+export interface Item {
+  label: string;
+  url?: string;
+}
+
+const { items = [] } = Astro.props as { items: Item[] };
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://clashceping.homes/"
+    },
+    ...items.map((item, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 2,
+      "name": item.label,
+      ...(item.url ? { "item": item.url.startsWith('http') ? item.url : `https://clashceping.homes${item.url}` } : {})
+    }))
+  ]
+};
+---
+
+<nav aria-label="面包屑导航" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-slate-400 flex items-center space-x-2">
+  <a href="/" class="hover:text-brand-400 transition-colors flex items-center gap-1">
+    <span>首页</span>
+  </a>
+
+  {items.map((item) => (
+    <div class="flex items-center space-x-2">
+      <span class="text-slate-600">/</span>
+      {item.url ? (
+        <a href={item.url} class="hover:text-brand-400 transition-colors">
+          {item.label}
+        </a>
+      ) : (
+        <span class="text-slate-200 font-medium">{item.label}</span>
+      )}
+    </div>
+  ))}
+</nav>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbSchema)} />

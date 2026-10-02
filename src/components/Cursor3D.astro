@@ -1,0 +1,141 @@
+---
+---
+<div id="cursor-3d" aria-hidden="true"></div>
+
+<style is:global>
+  /* 隐藏默认鼠标指针（仅在支持悬停的桌面设备上生效） */
+  @media (hover: hover) and (pointer: fine) {
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+  }
+
+  #cursor-3d {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 999999;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    /* 关键：启用 3D 空间感与阴影 */
+    transform-style: preserve-3d;
+    box-shadow: 
+      0 10px 20px rgba(0, 0, 0, 0.25),
+      inset 2px 2px 4px rgba(255, 255, 255, 0.6),
+      inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+    transition: transform 0.08s ease-out, opacity 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform;
+    opacity: 0;
+    transform: translate3d(-100px, -100px, 0);
+  }
+
+  #cursor-3d.is-active {
+    opacity: 1;
+  }
+
+  #cursor-3d.is-hovering {
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    box-shadow: 
+      0 12px 25px rgba(56, 189, 248, 0.4),
+      inset 2px 2px 5px rgba(255, 255, 255, 0.8),
+      inset -2px -2px 5px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+<script>
+  function initCursor3D() {
+    if (typeof window === 'undefined') return;
+    // 仅在支持悬停和精细指针的设备上生效
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const cursor = document.getElementById('cursor-3d');
+    if (!cursor) return;
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let targetX = -100;
+    let targetY = -100;
+    let rx = 0;
+    let ry = 0;
+    let isHovering = false;
+    let isVisible = false;
+
+    const size = 24;
+
+    function updatePosition() {
+      // 线性插值（Lerp）实现丝滑追随
+      mouseX += (targetX - mouseX) * 0.25;
+      mouseY += (targetY - mouseY) * 0.25;
+
+      const deltaX = targetX - mouseX;
+      const deltaY = targetY - mouseY;
+
+      // 移动时的 3D 倾斜感知
+      rx = Math.max(-25, Math.min(25, -deltaY * 1.2));
+      ry = Math.max(-25, Math.min(25, deltaX * 1.2));
+
+      const posX = mouseX - size / 2;
+      const posY = mouseY - size / 2;
+
+      const hoverScale = isHovering ? 'scale(1.35)' : 'scale(1)';
+      cursor.style.transform = `translate3d(${posX}px, ${posY}px, 0px) rotateX(${rx}deg) rotateY(${ry}deg) ${hoverScale}`;
+
+      if (isVisible) {
+        cursor.classList.add('is-active');
+      } else {
+        cursor.classList.remove('is-active');
+      }
+
+      requestAnimationFrame(updatePosition);
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (!isVisible) {
+        isVisible = true;
+        mouseX = targetX;
+        mouseY = targetY;
+      }
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      isVisible = false;
+    });
+
+    document.addEventListener('mouseenter', () => {
+      isVisible = true;
+    });
+
+    // 交互元素悬浮反馈
+    const interactiveSelector = 'a, button, input, textarea, select, [role="button"], .glass-card, .clickable';
+
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target as HTMLElement;
+      if (target && target.closest(interactiveSelector)) {
+        isHovering = true;
+        cursor.classList.add('is-hovering');
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const target = e.target as HTMLElement;
+      if (target && target.closest(interactiveSelector)) {
+        isHovering = false;
+        cursor.classList.remove('is-hovering');
+      }
+    });
+
+    requestAnimationFrame(updatePosition);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCursor3D);
+  } else {
+    initCursor3D();
+  }
+  document.addEventListener('astro:page-load', initCursor3D);
+</script>

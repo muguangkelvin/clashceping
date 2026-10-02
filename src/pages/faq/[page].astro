@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import faqsData from '../../data/faqs.json';
+
+export async function getStaticPaths() {
+  const pages = [2, 3, 4, 5];
+  return pages.map((pageNumber) => ({
+    params: { page: String(pageNumber) },
+    props: { pageNumber },
+  }));
+}
+
+const { pageNumber } = Astro.props;
+
+const pageSize = 20;
+const startIdx = (pageNumber - 1) * pageSize;
+const pageFaqs = faqsData.slice(startIdx, startIdx + pageSize);
+
+const pageTitle = `常见问题 FAQ 知识库 (第 ${pageNumber} 页) - Clash测评家`;
+const pageDesc = `全网极全的100个常见问题 FAQ 知识库第 ${pageNumber} 页，解答机场选择与节点配置疑难。`;
+
+const breadcrumbs = [
+  { label: 'FAQ 疑难解答中心', url: '/faq/' },
+  { label: `第 ${pageNumber} 页` }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mb-8">
+      <h1 class="text-3xl font-extrabold text-white mb-3">
+        FAQ 疑难解答中心 (第 {pageNumber} 页)
+      </h1>
+      <p class="text-xs text-slate-400">显示第 {startIdx + 1} 至 {startIdx + pageFaqs.length} 项（共 100 题）</p>
+    </div>
+
+    <!-- FAQ Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+      {pageFaqs.map((f) => (
+        <div class="glass-card rounded-xl p-5 border border-slate-800 hover:border-brand-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+              <span class="px-2 py-0.5 rounded bg-brand-500/10 text-brand-300 border border-brand-500/30">
+                {f.cluster}
+              </span>
+              <span>核验: {f.lastChecked}</span>
+            </div>
+            <h2 class="text-base font-bold text-white hover:text-brand-300 transition-colors mb-2">
+              <a href={`/faq/${f.slug}/`}>
+                ❓ {f.questionTitle}
+              </a>
+            </h2>
+            <p class="text-xs text-slate-300 line-clamp-3 leading-relaxed mb-4">
+              {f.answer.slice(0, 140)}...
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+            <span class="text-slate-500">约 5 分钟阅读</span>
+            <a href={`/faq/${f.slug}/`} class="font-semibold text-brand-400 hover:text-brand-300">
+              查看完整回答 →
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Pagination Nav -->
+    <div class="flex items-center justify-center space-x-2 my-8">
+      <a href={pageNumber === 2 ? "/faq/" : `/faq/${pageNumber - 1}/`} class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">← 上一页</a>
+      {[1, 2, 3, 4, 5].map((p) => (
+        <a 
+          href={p === 1 ? "/faq/" : `/faq/${p}/`}
+          class={`px-4 py-2 rounded-lg text-xs font-bold transition-colors ${p === pageNumber ? "bg-brand-600 text-white" : "bg-slate-800 hover:bg-slate-700 text-slate-300"}`}
+        >
+          {p}
+        </a>
+      ))}
+      {pageNumber < 5 && (
+        <a href={`/faq/${pageNumber + 1}/`} class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">下一页 →</a>
+      )}
+    </div>
+  </div>
+</BaseLayout>

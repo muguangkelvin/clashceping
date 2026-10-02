@@ -1,0 +1,37 @@
+---
+export interface Props {
+  title: string;
+  summary: string;
+  url: string;
+  date?: string;
+  category?: string;
+  readTime?: string;
+}
+
+const { title, summary, url, date = "2026-10-01", category = "机场测评", readTime = "5分钟阅读" } = Astro.props;
+---
+
+<article class="glass-card rounded-xl p-5 hover:border-brand-500/40 transition-all duration-300 flex flex-col justify-between group">
+  <div>
+    <div class="flex items-center justify-between text-xs text-slate-400 mb-2.5">
+      <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-brand-300 font-medium border border-slate-700">
+        {category}
+      </span>
+      <span>{date}</span>
+    </div>
+    <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors line-clamp-2 mb-2">
+      <a href={url}>{title}</a>
+    </h3>
+    <p class="text-xs text-slate-300 leading-relaxed line-clamp-3 mb-4">
+      {summary}
+    </p>
+  </div>
+
+  <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+    <span class="text-slate-500">{readTime}</span>
+    <a href={url} class="font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1">
+      阅读全文
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</article>

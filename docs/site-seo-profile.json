@@ -1,0 +1,225 @@
+{
+  "profileVersion": "2026.1.0",
+  "siteTopic": "Clash与Sing-box节点多维实测、机场背景起底与IEPL专线推荐",
+  "domain": "clashceping.homes",
+  "brandName": "Clash测评家",
+  "primaryKeywords": [
+    "Clash测评",
+    "Clash节点测速",
+    "机场出生背景",
+    "老牌机场推荐",
+    "2026魔法上网梯子",
+    "IEPL专线测评",
+    "4K流媒体解锁节点",
+    "Sing-box配置订阅",
+    "防失联稳定机场"
+  ],
+  "secondaryKeywords": [
+    "性价比机场",
+    "便宜机场推荐",
+    "低延迟游戏节点",
+    "双ISP住宅IP",
+    "ChatGPT原生节点",
+    "Hysteria 2协议",
+    "Trojan节点",
+    "Shadowsocks 2022",
+    "大流量影音梯子"
+  ],
+  "longTailKeywords": [
+    "2026年稳定机场推荐",
+    "Clash Verge Rev节点订阅教程",
+    "Sing-box一键导入配置",
+    "IEPL专线晚高峰丢包率实测",
+    "哪个机场解锁Netflix和DisneyPlus",
+    "小流量年付性价比机场盘点",
+    "防止ChatGPT和Claude被封的节点IP",
+    "校园网弱网抗丢包梯子推荐"
+  ],
+  "heroKeywords": [
+    "Clash测评",
+    "Clash节点测速",
+    "老牌机场推荐",
+    "2026魔法上网梯子",
+    "IEPL专线测评",
+    "4K流媒体解锁节点",
+    "Sing-box配置订阅",
+    "防失联稳定机场",
+    "性价比机场推荐",
+    "双ISP住宅IP"
+  ],
+  "footerKeywords": [
+    "Clash测评",
+    "Clash节点测速",
+    "机场出生背景",
+    "老牌机场推荐",
+    "2026魔法上网梯子",
+    "IEPL专线测评",
+    "4K流媒体解锁节点",
+    "Sing-box配置订阅",
+    "防失联稳定机场"
+  ],
+  "navigationItems": [
+    {
+      "label": "首页",
+      "url": "/",
+      "type": "home",
+      "isContentSection": false,
+      "isCommercial": false,
+      "primaryKeyword": "Clash测评家",
+      "supportingKeywords": ["Clash节点测速", "2026魔法上网梯子"],
+      "articleSeeds": [],
+      "articleCount": 0
+    },
+    {
+      "label": "机场推荐",
+      "url": "/recommendations/",
+      "type": "commercial",
+      "isContentSection": true,
+      "isCommercial": true,
+      "primaryKeyword": "老牌机场推荐",
+      "supportingKeywords": ["2026魔法上网梯子", "防失联稳定机场", "IEPL专线测评"],
+      "articleSeeds": [
+        "2026年最新老牌稳定机场推荐指南",
+        "适合新手的入门级机场选择与配置教程",
+        "按月付费与按流量计费机场全方位横向对比",
+        "跨境远程办公与AI团队高SLA专线机场推荐",
+        "备用机场怎么选：敏感期防失联冗余机制解析",
+        "AI 机场推荐：ChatGPT、Claude、Gemini 等工具的节点与套餐选择",
+        "AI 工具使用场景怎么选机场：地区节点、IP 质量、延迟与设备兼容",
+        "AI 办公机场推荐：跨境协作、代码工具与多设备需求比较"
+      ],
+      "articleCount": 8
+    },
+    {
+      "label": "性价比机场",
+      "url": "/recommendations/value/",
+      "type": "commercial",
+      "isContentSection": true,
+      "isCommercial": true,
+      "primaryKeyword": "性价比机场",
+      "supportingKeywords": ["便宜机场推荐", "小流量年付机场", "低价大流量套餐"],
+      "articleSeeds": [
+        "2026极具性价比机场盘点：低至10元/月跑满千兆",
+        "小流量年付机场避坑指南：学生党与轻度冲浪首选",
+        "大流量影音套餐成本对比：谁才是性价比之王",
+        "便宜机场能用吗？公网中转与专线的成本底层逻辑",
+        "平价机场晚高峰带宽压测：真实下行速率与丢包率"
+      ],
+      "articleCount": 5
+    },
+    {
+      "label": "机场测评",
+      "url": "/reviews/",
+      "type": "review_hub",
+      "isContentSection": true,
+      "isCommercial": true,
+      "primaryKeyword": "Clash测评",
+      "supportingKeywords": ["Clash节点测速", "机场出生背景", "IEPL专线测评"],
+      "articleSeeds": [
+        "28家主流机场背景起底与晚高峰实测数据大合集",
+        "如何通过测速图看懂机场真实下行与延迟",
+        "公网BGP中转 vs IEPL国际专线：架构演进全解析",
+        "落地IP纯净度与双ISP住宅IP防封锁深度测评",
+        "机场服务商运营年份与历史背景溯源调查"
+      ],
+      "articleCount": 5
+    },
+    {
+      "label": "Clash 机场推荐",
+      "url": "/recommendations/clash/",
+      "type": "commercial",
+      "isContentSection": true,
+      "isCommercial": true,
+      "primaryKeyword": "Clash 机场推荐",
+      "supportingKeywords": ["Clash Verge Rev配置", "Sing-box配置订阅", "Clash节点测速"],
+      "articleSeeds": [
+        "Clash Verge Rev最佳适配机场推荐与一键订阅教程",
+        "Sing-box与Clash双兼容机场选择与规则集优化",
+        "不同设备（Windows/Mac/Android）Clash客户端全对比",
+        "Clash订阅失败与节点连接不上的排查与修复指南",
+        "Subconverter订阅转换安全隐患与自建转换节点方法"
+      ],
+      "articleCount": 5
+    },
+    {
+      "label": "新手教程",
+      "url": "/guides/",
+      "type": "informational",
+      "isContentSection": true,
+      "isCommercial": false,
+      "primaryKeyword": "Sing-box配置订阅",
+      "supportingKeywords": ["Clash节点测速", "新手入门"],
+      "articleSeeds": [
+        "零基础小白第一次购买机场与配置Clash全流程",
+        "如何看懂套餐流量、计费周期与节点倍率",
+        "根据家庭设备数与使用场景精准计算流量需求",
+        "购买机场前必看检查清单与风险防范",
+        "Windows/macOS/iOS/Android四端订阅一键拉取"
+      ],
+      "articleCount": 5
+    },
+    {
+      "label": "常见问题",
+      "url": "/faq/",
+      "type": "faq",
+      "isContentSection": true,
+      "isCommercial": false,
+      "primaryKeyword": "常见问题",
+      "supportingKeywords": ["FAQ100", "机场疑难解答"],
+      "articleSeeds": [],
+      "articleCount": 100
+    },
+    {
+      "label": "个人中心",
+      "url": "/about/",
+      "type": "informational",
+      "isContentSection": false,
+      "isCommercial": false,
+      "primaryKeyword": "个人中心",
+      "supportingKeywords": ["关于本站", "站长档案", "测评标准"],
+      "articleSeeds": [],
+      "articleCount": 0
+    }
+  ],
+  "faqKeywordCount": 100,
+  "faqClusters": [
+    { "name": "机场推荐与选择方法", "quota": 18 },
+    { "name": "Clash客户端与订阅配置", "quota": 14 },
+    { "name": "Shadowsocks/SS协议", "quota": 10 },
+    { "name": "Trojan协议与抗封锁", "quota": 10 },
+    { "name": "梯子口语搜索与风险提示", "quota": 8 },
+    { "name": "节点、地区与延迟", "quota": 14 },
+    { "name": "套餐价格与优惠码", "quota": 10 },
+    { "name": "多设备与系统兼容", "quota": 8 },
+    { "name": "排障、安全与购买须知", "quota": 8 }
+  ],
+  "faqPageSize": 20,
+  "titlePatterns": {
+    "home": "Clash测评家 | 2026节点测速与背景溯源 - 稳定高速魔法上网/机场梯子测评指南",
+    "recommendations": "2026年老牌稳定机场推荐榜：套餐、价格与适合人群大对比 - Clash测评家",
+    "value": "性价比机场推荐：低至10元/月跑满千兆大带宽 - Clash测评家",
+    "clash": "Clash 机场推荐：Clash Verge Rev与Sing-box最佳订阅选择 - Clash测评家",
+    "reviews": "机场测评大合集：28家机场背景起底与晚高峰实测 - Clash测评家",
+    "providerDetail": "{providerName}怎么样？成立背景起底、线路架构与 2026 晚高峰实测 - Clash测评家",
+    "faq": "常见问题 FAQ 知识库：机场推荐、Clash与节点配置疑难解答 - Clash测评家"
+  },
+  "descriptionPatterns": {
+    "home": "专注于 Clash、Sing-box 等客户端的高速机场实测与背景起底。深度解析各节点前身历史、IEPL/IPLC 专线稳定性与 4K/8K 晚高峰表现，提供真实客观的魔法上网节点与机场梯子测评排行。",
+    "recommendations": "深度整理2026年优质老牌机场推荐列表，包含灵动云、暮光网络、飞猫云、微风网络等主流高品质专线机场，涵盖价格、流量、节点地区与支持设备完整对比。",
+    "providerDetail": "详细解读{providerName}的创立历史、团队运营背景、节点网络架构（公网中转/内网专线），以及在 Clash Verge 和 Sing-box 下的晚高峰丢包与速率表现。"
+  },
+  "protectedBrandTerms": [
+    "Clash测评家",
+    "clashceping.homes",
+    "灵动云",
+    "暮光网络",
+    "飞猫云",
+    "微风网络",
+    "隐形人",
+    "浪网 WaveNet",
+    "梯子云 LadderCloud",
+    "飞V FlyV"
+  ],
+  "inactiveKeywords": [],
+  "sourceUpdatedAt": "2026-10-01T15:42:31+08:00"
+}

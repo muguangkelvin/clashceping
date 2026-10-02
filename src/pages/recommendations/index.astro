@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import ComparisonTable from '../../components/ComparisonTable.astro';
+import FullProviderEvaluationMatrix from '../../components/FullProviderEvaluationMatrix.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import providersData from '../../data/providers.json';
+
+const pageTitle = "2026年老牌稳定机场推荐榜：套餐、价格与适合人群大对比 - Clash测评家";
+const pageDesc = "深度整理2026年优质老牌机场推荐列表，包含灵动云、暮光网络、飞猫云、微风网络等主流高品质专线机场，涵盖价格、流量、节点地区与支持设备完整对比。";
+
+const breadcrumbs = [{ label: '机场推荐总榜' }];
+
+const top4Providers = providersData.slice(0, 4);
+const next4Providers = providersData.slice(4, 8);
+const otherProviders = providersData.slice(8, 20);
+
+// Articles for the 机场推荐 section
+const sectionArticles = [
+  { title: "2026年最新老牌稳定机场推荐指南", summary: "如何评估机场运营历史背景与IEPL专线抗封锁能力", url: "/recommendations/" },
+  { title: "适合新手的入门级机场选择与配置教程", summary: "零基础小白第一次购买机场避坑指南与流量算账", url: "/guides/" },
+  { title: "按月付费与按流量计费机场全方位横向对比", summary: "对比月付套餐与一次性不限时重置流量包的成本", url: "/recommendations/value/" },
+  { title: "跨境远程办公与AI团队高SLA专线机场推荐", summary: "独立住宅IP与独享IEPL内网专线的企业级选择", url: "/recommendations/clash/" },
+  { title: "备用机场怎么选：敏感期防失联冗余机制解析", summary: "多入口BGP智能解析与自动热备域名切换逻辑", url: "/rankings/" },
+  { title: "AI 机场推荐：ChatGPT、Claude、Gemini 等工具的节点与套餐选择", summary: "针对 OpenAI 和 Claude 严苛风控防封号的 IP 落地纯净度分析", url: "/nodes/" },
+  { title: "AI 工具使用场景怎么选机场：地区节点、IP 质量、延迟与设备兼容", summary: "深入分析美西与东亚节点的路由延迟与双 ISP 住宅 IP 解锁特点", url: "/nodes/" },
+  { title: "AI 办公机场推荐：跨境协作、代码工具与多设备需求比较", summary: "多设备并发连接与企业轻办公环境下的高稳定性专线推荐", url: "/recommendations/clash/" }
+];
+
+const faqs = [
+  { question: "2026年选择老牌稳定机场最核心看什么？", answer: "首要看运营年份历史起底（是否经历过敏感期考验）、骨干线路架构（是否为端到端IEPL专线），以及落地IP纯净度（是否解锁4K流媒体与防封号）。" },
+  { question: "为什么榜单前四名固定为灵动云、暮光网络、飞猫云和微风网络？", answer: "这四家机场在长时间实测中丢包率控制极优，线路稳定度高，价格梯次清晰，分别在智能分流、晚高峰8K影音、小流量年付及平价无感连接上具备突出实力。" }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Header -->
+    <div class="max-w-3xl mb-10">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-500/10 text-brand-300 border border-brand-500/30">
+        📌 2026年度权威评测
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-4">
+        2026年老牌稳定机场推荐榜：套餐、价格与适合人群大对比
+      </h1>
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        本支柱页面整合了 28 家机场的真实客户端测速、专线抗封锁履历与前身起底档案。优先呈现编辑部核心主推的四家高品质专线机场，涵盖价格、流量额度、优惠码及直接购买入口。
+      </p>
+    </div>
+
+    <!-- Top 4 Primary Recommendations -->
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+        <span>🥇</span>
+        <span>第一梯队：核心老牌与旗舰专线机场 (推荐 1-4 名)</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {top4Providers.map((provider) => (
+          <ProviderCard provider={provider} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Ranks 5-8 Recommendations -->
+    <section class="mb-14 bg-slate-950/60 p-6 rounded-2xl border border-slate-800">
+      <h2 class="text-xl font-bold text-white mb-4">
+        🥈 第二梯队：Varnexa 矩阵与特色私密专线 (推荐 5-8 名)
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {next4Providers.map((provider) => (
+          <ProviderCard provider={provider} compact={true} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Full 28 Airport 15-Dimension Evaluation Matrix -->
+    <FullProviderEvaluationMatrix />
+
+    <!-- Full Comparison Table -->
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-white mb-4">📊 2026 优质机场多维度参数横向大比拼</h2>
+      <ComparisonTable />
+    </section>
+
+    <!-- AI 机场推荐 Special Section -->
+    <section class="mb-14 p-6 rounded-2xl bg-gradient-to-br from-purple-950/40 via-slate-900 to-slate-950 border border-purple-500/30">
+      <div class="max-w-3xl mb-6">
+        <span class="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-bold border border-purple-500/30">
+          🤖 专项突破
+        </span>
+        <h2 class="text-2xl font-bold text-white mt-2 mb-2">AI 机场推荐：ChatGPT / Claude 防风控专线</h2>
+        <p class="text-xs text-slate-300">针对 OpenAI、Claude 及 Gemini 对节点 IP 纯净度与欺诈值的严苛风控要求，精选具备双 ISP 住宅落地 IP 的服务商。</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {sectionArticles.slice(5, 8).map((art) => (
+          <a href={art.url} class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-purple-500/40 transition-colors block group">
+            <h3 class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors mb-2 line-clamp-2">{art.title}</h3>
+            <p class="text-xs text-slate-400 line-clamp-2">{art.summary}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Remaining Providers Pool -->
+    <section class="mb-14">
+      <h2 class="text-xl font-bold text-white mb-6">🌐 第五名以后服务池 (独立起底测评)</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {otherProviders.map((p) => (
+          <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-slate-500">#{p.rank}</span>
+              <h3 class="font-bold text-sm text-white">{p.name}</h3>
+              <span class="text-[11px] text-brand-400">{p.priceFrom || '以结算页为准'}</span>
+            </div>
+            <a href={`/providers/${p.slug}/`} class="text-xs px-2.5 py-1 rounded bg-slate-800 text-slate-200 hover:bg-slate-700">
+              测评
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-white mb-4">❓ 机场推荐常见疑问</h2>
+      <FAQ items={faqs} />
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,227 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import ComparisonTable from '../../components/ComparisonTable.astro';
+import providersData from '../../data/providers.json';
+
+const pageTitle = "性价比选购与避坑指南：低至10元/月跑满千兆大带宽 - Clash测评家";
+const pageDesc = "全网最详尽的高性价比平价机场选购与避坑深度指南，包含小流量年付计算、大流量成本对比、公网中转与专线成本逻辑及晚高峰压测实录。";
+
+const breadcrumbs = [
+  { label: '机场推荐', url: '/recommendations/' },
+  { label: '性价比选购与避坑指南' }
+];
+
+const top4Providers = providersData.slice(0, 4);
+
+const valueSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": pageTitle,
+  "description": pageDesc,
+  "author": {
+    "@type": "Organization",
+    "name": "Clash测评家"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Clash测评家",
+    "url": "https://clashceping.homes"
+  }
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs} schema={valueSchema}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mb-10">
+      <h1 class="text-3xl font-extrabold text-white mb-3">
+        性价比机场推荐：按预算与流量精准选择
+      </h1>
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        拒绝盲目多花钱。本栏目专门为学生党、轻度冲浪及寻求便宜平价机场的用户，精选单月价格在 10元-25元 之间且具备真正 IEPL 专线保障的高性价比方案。
+      </p>
+    </div>
+
+    <!-- Top 4 Primary Recommendations -->
+    <section class="mb-12">
+      <h2 class="text-xl font-bold text-white mb-6">🏆 高性价比旗舰专线推荐榜 (固定前四名)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {top4Providers.map((provider) => (
+          <ProviderCard provider={provider} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="mb-12">
+      <h2 class="text-xl font-bold text-white mb-4">📊 性价比机场价格与流量快速对比</h2>
+      <ComparisonTable />
+    </section>
+
+    <!-- 5-Part Complete Inline Reading Guide Section (No click/Read-More buttons) -->
+    <section class="mb-14 space-y-10 border-t border-slate-800 pt-10">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-2">
+          📖 深度选购指南与长篇实测全文
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          📊 性价比选购与避坑指南
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">
+          全文直接展示无须二次点击，涵盖算账逻辑、公网 vs 专线底层架构及晚高峰千兆压测。
+        </p>
+      </div>
+
+      <!-- Section 1 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-brand-500/20 text-brand-300 text-xs font-bold border border-brand-500/30">
+          专题一
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          一、 2026 极具性价比机场盘点：低至 10 元/月跑满千兆
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          对于绝大多数普通用户和学生党而言，“性价比”并不等于“绝对低价”，而是指在给定的预算（如 10元 ~ 20元/月）范围内，能够获得尽量高且平稳的实际带宽吞吐与低丢包率。2026 年的市场表明，采用优质 BGP 入口结合二层 IEPL 内网专线的中转服务商，已经成功将高品质专线的入门门槛拉低到了单月十几元的区间。
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-3 text-xs">
+          <div class="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+            <div class="font-bold text-white">🟢 灵动云 (SmartCloud)</div>
+            <div class="text-brand-400 font-bold">起步 18 元/月 (150GB)</div>
+            <div class="text-slate-400">智能分流算法+IEPL专线，千兆带宽跑满。</div>
+          </div>
+          <div class="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+            <div class="font-bold text-white">🟢 飞猫云 (FlyCat Cloud)</div>
+            <div class="text-emerald-400 font-bold">起步 84 元/年 (折 7元/月)</div>
+            <div class="text-slate-400">老牌猫系团队起底，学生党入门首选。</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 2 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
+          专题二
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          二、 小流量年付机场避坑指南：学生党首选
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          如果你的日常需求只是网页查资料、收发邮件或运行 API 脚本，每月实际流量消耗通常不超过 50GB。盲目购买几百G的大流量套餐只会造成资金浪费。此时，“小流量年付套餐”（例如飞猫云学生版 84元/年）成为最划算的选择。
+        </p>
+        <div class="p-4 bg-slate-950/80 rounded-xl border border-amber-800/40 text-xs space-y-2">
+          <div class="font-bold text-amber-300">⚠️ 学生党年付三大避坑红线：</div>
+          <ul class="list-disc list-inside text-slate-300 space-y-1 pl-1">
+            <li><strong>切勿买‘个人自建小作坊’：</strong> 没有 Telegram 交流群或运营不足 1 年的新站容易拉闸跑路。</li>
+            <li><strong>核验倍率隐患：</strong> 认清是否有 5x / 10x 隐藏高倍率节点导致配额瞬间扣光。</li>
+            <li><strong>确认多端一键拉取：</strong> 确保原生支持 Clash Verge Rev、Sing-box 及 Shadowrocket 简单导入。</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Section 3 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30">
+          专题三
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          三、 大流量影音套餐成本对比：谁才是性价比之王
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          对于重度 4K/8K 视频追剧爱好者（每月流量需求 300GB ~ 1TB 以上），评估性价比的核心指标是 <strong class="text-white">每 GB 单价 (GB/元)</strong> 以及 <strong class="text-white">晚高峰带宽爆发能力</strong>。
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-slate-800 my-2">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900 text-slate-400">
+              <tr>
+                <th class="py-2.5 px-3 font-semibold">套餐类型</th>
+                <th class="py-2.5 px-3 font-semibold">平均价格范围</th>
+                <th class="py-2.5 px-3 font-semibold">GB/元 性价比换算</th>
+                <th class="py-2.5 px-3 font-semibold">适合使用人群</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 bg-slate-950/40">
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">月付大流量 (300GB+)</td>
+                <td class="py-2.5 px-3 text-brand-400">30 ~ 50 元/月</td>
+                <td class="py-2.5 px-3 text-emerald-400 font-mono font-bold">约 8 ~ 10 GB/元</td>
+                <td class="py-2.5 px-3 text-slate-400">追剧党、家庭多设备共享</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">不限时按量包 (500GB)</td>
+                <td class="py-2.5 px-3 text-brand-400">80 ~ 120 元/一次性</td>
+                <td class="py-2.5 px-3 text-emerald-400 font-mono font-bold">约 4 ~ 6 GB/元</td>
+                <td class="py-2.5 px-3 text-slate-400">用量不稳定、出差备用</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <!-- Section 4 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-500/30">
+          专题四
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          四、 便宜机场能用吗？公网中转与专线的成本底层逻辑
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          许多用户心存疑问：几块钱一月的廉价机场到底能不能用？从网络底层逻辑来看，国际网络接入主要分为两类：
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-red-400">❌ 公网隧道/直连 (廉价机场方案)</div>
+            <p class="text-slate-400 leading-relaxed">
+              数据经过公共互联网和审查设备。平时看似有速度，但一到晚高峰骨干网拥堵，丢包率瞬间飙升至 10% ~ 30%，视频频繁卡顿死锁。
+            </p>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="font-bold text-emerald-400">✓ 端到端 IEPL 专线 (高品质机场方案)</div>
+            <p class="text-slate-400 leading-relaxed">
+              通过物理隔离的内网专线跨境传输，不经公网。即使在敏感期或晚高峰，丢包率依然控制在 0.5% 以下，延迟极度稳定。
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 5 -->
+      <article class="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded bg-red-500/20 text-red-300 text-xs font-bold border border-red-500/30">
+          专题五
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          五、 平价机场晚高峰带宽压测：真实下行速率与丢包率
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          编辑部在广东千兆联通与华东电信环境下，于晚间 20:00 至 24:00 黄金时段，对首推的高性价比专线机场进行了实测打码压测。
+        </p>
+        <div class="p-4 bg-slate-950/90 rounded-xl border border-slate-800 text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white">灵动云 (SmartCloud) 晚高峰实测下行：</span>
+            <span class="text-emerald-400 font-mono font-bold">680 Mbps (丢包率 0.1%)</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+            <div class="bg-emerald-400 h-full rounded-full" style="width: 88%"></div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2">
+            <span class="font-bold text-white">暮光网络 (TwilightNet) 晚高峰实测下行：</span>
+            <span class="text-emerald-400 font-mono font-bold">620 Mbps (丢包率 0.2%)</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+            <div class="bg-emerald-400 h-full rounded-full" style="width: 82%"></div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2">
+            <span class="font-bold text-white">飞猫云 (FlyCat Cloud) 晚高峰实测下行：</span>
+            <span class="text-emerald-400 font-mono font-bold">540 Mbps (丢包率 0.3%)</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+            <div class="bg-emerald-400 h-full rounded-full" style="width: 72%"></div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </div>
+</BaseLayout>

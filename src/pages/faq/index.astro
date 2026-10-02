@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import faqsData from '../../data/faqs.json';
+
+const pageTitle = "常见问题 FAQ 知识库：机场推荐、Clash与节点配置疑难解答 - Clash测评家";
+const pageDesc = "全网极全的100个常见问题 FAQ 知识库，涵盖机场选择、Clash Verge Rev、Sing-box、Shadowsocks、Trojan 协议及节点排障疑难解答。";
+
+const breadcrumbs = [{ label: 'FAQ 疑难解答中心' }];
+
+// Paginated page 1 (first 20 FAQs)
+const page1Faqs = faqsData.slice(0, 20);
+
+const clusters = [
+  "机场推荐与选择方法",
+  "Clash客户端与订阅配置",
+  "Shadowsocks/SS协议",
+  "Trojan协议与抗封锁",
+  "梯子口语搜索与风险提示",
+  "节点、地区与延迟",
+  "套餐价格与优惠码",
+  "多设备与系统兼容",
+  "排障、安全与购买须知"
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Header -->
+    <div class="max-w-3xl mb-10">
+      <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-500/10 text-brand-300 border border-brand-500/30">
+        📚 100 题 FAQ 知识库索引
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-4">
+        机场推荐、Clash 与节点常见问题中心
+      </h1>
+      <p class="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        本中心整理了恰好 100 个具有明确搜索意图的真实疑难解答，涵盖选购指南、协议解析、客户端配置与网络排障。
+      </p>
+    </div>
+
+    <!-- Cluster Chips -->
+    <div class="flex flex-wrap gap-2 mb-8">
+      {clusters.map((c) => (
+        <span class="px-3 py-1 rounded-full bg-slate-800 text-xs font-medium text-slate-300 border border-slate-700">
+          {c}
+        </span>
+      ))}
+    </div>
+
+    <!-- Page 1 20 FAQ Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+      {page1Faqs.map((f) => (
+        <div class="glass-card rounded-xl p-5 border border-slate-800 hover:border-brand-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+              <span class="px-2 py-0.5 rounded bg-brand-500/10 text-brand-300 border border-brand-500/30">
+                {f.cluster}
+              </span>
+              <span>核验: {f.lastChecked}</span>
+            </div>
+            <h2 class="text-base font-bold text-white hover:text-brand-300 transition-colors mb-2">
+              <a href={`/faq/${f.slug}/`}>
+                ❓ {f.questionTitle}
+              </a>
+            </h2>
+            <p class="text-xs text-slate-300 line-clamp-3 leading-relaxed mb-4">
+              {f.answer.slice(0, 140)}...
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+            <span class="text-slate-500">约 5 分钟阅读</span>
+            <a href={`/faq/${f.slug}/`} class="font-semibold text-brand-400 hover:text-brand-300">
+              查看完整回答 →
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Pagination Nav -->
+    <div class="flex items-center justify-center space-x-2 my-8">
+      <span class="px-4 py-2 rounded-lg bg-brand-600 text-white font-bold text-xs">1</span>
+      <a href="/faq/2/" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">2</a>
+      <a href="/faq/3/" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">3</a>
+      <a href="/faq/4/" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">4</a>
+      <a href="/faq/5/" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">5</a>
+      <a href="/faq/2/" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors">下一页 →</a>
+    </div>
+  </div>
+</BaseLayout>

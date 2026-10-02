@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "页面未找到 (404 Error) - Clash测评家";
+const pageDesc = "您访问的页面不存在或已被移至新地址。";
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <div class="max-w-2xl mx-auto px-4 py-20 text-center">
+    <span class="text-6xl mb-4 block">🧭</span>
+    <h1 class="text-4xl font-extrabold text-white mb-3">404 - 页面未找到</h1>
+    <p class="text-sm text-slate-300 mb-8">您访问的页面地址可能已变更。请通过下方按钮返回首页或查看精选机场推荐。</p>
+    
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/" class="px-6 py-3 rounded-xl bg-brand-600 font-bold text-white text-sm hover:bg-brand-500 transition-colors">
+        返回首页
+      </a>
+      <a href="/recommendations/" class="px-6 py-3 rounded-xl bg-slate-800 font-bold text-slate-200 text-sm hover:bg-slate-700 transition-colors">
+        查看机场推荐榜
+      </a>
+    </div>
+  </div>
+</BaseLayout>

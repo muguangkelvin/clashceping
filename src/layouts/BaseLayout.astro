@@ -1,0 +1,40 @@
+---
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Cursor3D from '../components/Cursor3D.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  breadcrumbs?: Array<{ label: string; url?: string }>;
+  schema?: any;
+}
+
+const { title, description, canonical, breadcrumbs, schema } = Astro.props;
+const currentUrl = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <SEO title={title} description={description} canonical={canonical} schema={schema} />
+  </head>
+  <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+    <Cursor3D />
+    <Header currentUrl={currentUrl} />
+    
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <Breadcrumbs items={breadcrumbs} />
+    )}
+
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

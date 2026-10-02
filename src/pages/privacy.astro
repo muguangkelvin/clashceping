@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "隐私政策 (Privacy Policy) - Clash测评家";
+const pageDesc = "了解 Clash测评家 如何保障访客网络隐私与数据安全。";
+
+const breadcrumbs = [{ label: '隐私政策' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} breadcrumbs={breadcrumbs}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert text-sm text-slate-300 leading-relaxed">
+    <h1 class="text-3xl font-extrabold text-white mb-6">隐私政策 (Privacy Policy)</h1>
+    <p>本站严格遵守匿名与无日志隐私保护原则。本站不会记录、存储或泄露访客的 IP 地址、访问轨迹或敏感数据。</p>
+  </article>
+</BaseLayout>

@@ -1,0 +1,352 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroVisual3D from '../components/HeroVisual3D.jsx';
+import ProviderCard from '../components/ProviderCard.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import FAQ from '../components/FAQ.astro';
+import providers from '../data/providers.json';
+import faqs from '../data/faqs.json';
+
+const pageTitle = "Clash测评家 | 2026节点测速与背景溯源 - 稳定高速魔法上网/机场梯子测评指南";
+const pageDesc = "专注于 Clash、Sing-box 等客户端的高速机场实测与背景起底。深度解析各节点前身历史、IEPL/IPLC 专线稳定性与 4K/8K 晚高峰表现，提供真实客观的魔法上网节点与机场梯子测评排行。";
+
+// Top 4 Providers (Fixed Order: 1. 灵动云, 2. 暮光网络, 3. 飞猫云, 4. 微风网络)
+const top4Providers = providers.slice(0, 4);
+
+// Providers 5-8 (Fixed Order: 5. 隐形人, 6. 浪网 WaveNet, 7. 梯子云 LadderCloud, 8. 飞V FlyV)
+const next4Providers = providers.slice(4, 8);
+
+// Remaining Providers
+const otherProviders = providers.slice(8, 16);
+
+// FAQ subset for homepage
+const homepageFaqs = faqs.slice(0, 6).map(f => ({
+  question: f.questionTitle,
+  answer: f.answer
+}));
+
+// Home Schema
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Clash测评家",
+  "url": "https://clashceping.homes",
+  "description": pageDesc,
+  "inLanguage": "zh-CN"
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} schema={homeSchema}>
+  <!-- 1. HERO SECTION (Astro Islands Architecture with client:idle 3D visual) -->
+  <section class="relative overflow-hidden hero-gradient pt-8 pb-16 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Left: Text & CTA Block -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold">
+            <span>✨ 2026节点测速与背景溯源</span>
+            <span>•</span>
+            <span>Clash / Sing-box 专线实测</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            Clash 节点多维实测与 <br class="hidden sm:inline" />
+            <span class="bg-gradient-to-r from-brand-400 via-brand-300 to-accent-500 bg-clip-text text-transparent">
+              机场前身背景透视
+            </span>
+          </h1>
+
+          <!-- Visible Hero Description Block -->
+          <div class="text-sm md:text-base text-slate-300 leading-relaxed bg-slate-950/70 p-4.5 rounded-xl border border-slate-800/80 shadow-inner space-y-3">
+            <p>
+              在这个节点信息鱼龙混杂的时代，找到一条兼顾“晚高峰不卡顿”与“性价比”的专线绝非易事。<strong class="text-white font-semibold">Clash测评家</strong> 致力于打造一个纯粹、客观的网络加速评测空间。我们不盲从吹捧，只以真实丢包率、4K/8K流媒体实测、晚高峰速率以及跨国游戏延迟为衡量标准。
+            </p>
+            <p>
+              无论你需要用于跨境办公、学术科研还是高清流媒体解锁，这里都会定期带来硬核的机场推荐与稳定梯子推荐。从百兆平民备用到高规格 IPLC/IEPL 专线，为你横向对比各家优缺点与真实流媒体解锁能力，助你快速挑出最靠谱的魔法梯子，告别断流焦虑。
+            </p>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+            <a 
+              href="/recommendations/"
+              class="px-6 py-3.5 rounded-xl font-bold text-white text-center bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 shadow-xl shadow-brand-600/30 hover:scale-[1.02] transition-all"
+            >
+              🚀 查看 2026 机场推荐榜
+            </a>
+            <a 
+              href="/reviews/"
+              class="px-6 py-3.5 rounded-xl font-semibold text-slate-200 text-center bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:text-white transition-all"
+            >
+              🔍 阅读 28 家机场起底测评
+            </a>
+          </div>
+
+          <!-- Light Disclosure -->
+          <div class="text-[11px] text-slate-400 flex items-center gap-2">
+            <span>🔒 独立编辑声明：包含合规合作链接，价格与套餐以第三方最终结算页为准。</span>
+          </div>
+        </div>
+
+        <!-- Right: Astro Island - 3D Hydrated Canvas (client:idle) -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="w-full max-w-md glass-card rounded-2xl p-2 shadow-2xl relative">
+            <!-- Astro Island: Hydrated on Idle -->
+            <HeroVisual3D client:idle />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT CLASH CEPING JIA INTRO SECTION -->
+  <section class="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="glass-card rounded-2xl p-6 md:p-8 border border-slate-800 shadow-xl space-y-6">
+      
+      <div class="border-b border-slate-800/80 pb-4">
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <span class="text-brand-400">💡</span>
+          <span>关于「Clash测评家」</span>
+        </h2>
+        <p class="text-sm text-slate-300 mt-1">
+          欢迎来到 Clash测评家。
+        </p>
+      </div>
+
+      <!-- Grid of 4 Core Focus Areas -->
+      <div>
+        <h3 class="text-base font-bold text-brand-300 mb-4 flex items-center gap-2">
+          🎯 我们关注什么？
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+            <h4 class="font-bold text-sm text-white">多维度实测数据</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              拒绝盲目吹捧与玄学体验。我们通过晚高峰压测、全天候丢包监控、4K/8K 流媒体解锁实测与真实测速带宽，还原各线路的硬核实力。
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+            <h4 class="font-bold text-sm text-white">客户端深度适配</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              涵盖 Clash Verge Rev、Clash Nyanpasu、Sing-box、Shadowrocket、Surge 等主流客户端的保姆级入门与高阶进阶教程，包含分流规则优化、透明网关搭建及常见报错排查。
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+            <h4 class="font-bold text-sm text-white">主流协议与架构科普</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              通俗解析 Shadowsocks、VMess、Trojan、VLESS 以及 Hysteria 2、TUIC 等前沿协议的原理，剖析 BGP 中继、IPLC/IEPL 专线等网络拓扑的本质区别。
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+            <h4 class="font-bold text-sm text-white">客观避坑与优选指南</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              针对出海开发者、跨境电商运营、流媒体爱好者及轻度出海办公用户，分类提供量身定制的选型参考与使用避坑建议。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principles & Disclaimer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-800/80">
+        <!-- Principles -->
+        <div class="space-y-2">
+          <h3 class="text-base font-bold text-emerald-400 flex items-center gap-2">
+            🛡️ 测评与评测原则
+          </h3>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li class="bg-slate-950/40 p-2.5 rounded-lg border border-slate-800">
+              <strong class="text-white">客观优先：</strong>以真实网络指标（延迟抖动、丢包率、有效带宽与流媒体落地纯净度）为基准输出测评结果。
+            </li>
+            <li class="bg-slate-950/40 p-2.5 rounded-lg border border-slate-800">
+              <strong class="text-white">注重安全：</strong>遵循最小权限与合规原则，引导读者安全使用网络工具，规避潜在的配置泄露与数据风险。
+            </li>
+            <li class="bg-slate-950/40 p-2.5 rounded-lg border border-slate-800">
+              <strong class="text-white">保持更新：</strong>网络环境与客户端生态瞬息万变，我们定期复测历史内容与推荐列表，剔除失效配置与不稳定线路。
+            </li>
+          </ul>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="space-y-2">
+          <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+            ⚖️ 免责声明
+          </h3>
+          <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-800/30 text-xs text-slate-300 leading-relaxed">
+            本站所有内容仅用于网络技术交流、协议研究与学术探讨。请读者严格遵守所在国家与地区的法律法规，文明合规使用互联网资源。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. TOP 4 FEATURED PROVIDERS SHOWCASE (STRICT RANKING: 1. 灵动云 2. 暮光网络 3. 飞猫云 4. 微风网络) -->
+  <section class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">
+        🏆 2026年度精选老牌与旗舰专线机场推荐
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-400">
+        拒绝虚标参数与纯搬运，基于二层 IEPL 专线丢包率、抗敏感期封锁能力与双 ISP 落地纯净度综合评定。
+      </p>
+    </div>
+
+    <!-- Top 4 Highlighted Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {top4Providers.map((provider) => (
+        <ProviderCard provider={provider} />
+      ))}
+    </div>
+  </section>
+
+  <!-- 3. RANKS 5 TO 8 FEATURED PROVIDERS (STRICT RANKING: 5. 隐形人 6. 浪网 7. 梯子云 8. 飞V) -->
+  <section class="py-10 bg-slate-950/60 border-y border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h3 class="text-xl font-bold text-white">⚡ Varnexa 高品质矩阵与特色私密专线 (5-8名)</h3>
+          <p class="text-xs text-slate-400 mt-1">具备统一高品质海外云资源池与 RAM-Only 内存日志隔离特性。</p>
+        </div>
+        <a href="/recommendations/" class="text-xs font-semibold text-brand-400 hover:text-brand-300">
+          查看完整榜单 →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {next4Providers.map((provider) => (
+          <ProviderCard provider={provider} compact={true} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. QUICK COMPARISON TABLE -->
+  <section class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl font-bold text-white">📊 核心专线机场参数与价格横向快速对比</h2>
+        <p class="text-xs text-slate-400 mt-1">包含起步月费、流量额度、底层加密协议及站内测评入口。</p>
+      </div>
+      <a href="/rankings/" class="text-xs font-semibold text-brand-400 hover:text-brand-300 whitespace-nowrap">
+        查看完整排行榜与评分规则 →
+      </a>
+    </div>
+
+    <ComparisonTable />
+  </section>
+
+  <!-- 5. SELECT AIRPORT BY SCENARIO -->
+  <section class="py-12 bg-slate-950/40 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h2 class="text-2xl font-bold text-white mb-2">🎯 按使用需求场景精准匹配</h2>
+        <p class="text-xs text-slate-400">无论你是学生党低预算冲浪、重度 8K 影音、还是 AI 生产力交互，都有适配方案。</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Scenario 1: AI Productivity -->
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold mb-4">
+              🤖
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">AI 生产力交互与防风控</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              针对 ChatGPT Plus、Claude 3.5 Sonnet 及 OpenAI API，落地 IP 纯净度至关重要。[灵动云]与[可信云]配备黑名单清洗的双 ISP 住宅 IP。
+            </p>
+          </div>
+          <a href="/recommendations/ai/" class="inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 text-xs font-bold text-purple-300 hover:text-white transition-all group">
+            <span>阅读全文：了解 AI 适配方案</span>
+            <span class="group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+
+        <!-- Scenario 2: Heavy 8K Streaming -->
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-xl font-bold mb-4">
+              🎬
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">8K 晚高峰极速影音追剧</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              晚高峰 20:00-00:00 不掉速。[暮光网络]与[宇宙云]具备冗余专线带宽池，确保 YouTube 8K/4K 与 Netflix 杜比视界秒开。
+            </p>
+          </div>
+          <a href="/recommendations/streaming/" class="inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-xs font-bold text-red-300 hover:text-white transition-all group">
+            <span>阅读全文：了解 8K 大带宽方案</span>
+            <span class="group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+
+        <!-- Scenario 3: Value & Budget -->
+        <div class="glass-card rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl font-bold mb-4">
+              💰
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">学生党与平价轻量选择</h3>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              预算有限、追求极致性价比。[飞猫云] 84元/年（折合7元/月）与[二猫云]平价套餐，低成本满足全天候基础需求。
+            </p>
+          </div>
+          <a href="/recommendations/budget/" class="inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/30 text-xs font-bold text-emerald-300 hover:text-white transition-all group">
+            <span>阅读全文：查看平价性价比方案</span>
+            <span class="group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. DEVICE & CLIENT GUIDES -->
+  <section class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="text-2xl font-bold text-white mb-2">📱 多端客户端一键配置教程</h2>
+      <p class="text-xs text-slate-400">覆盖全平台主要客户端，提供清晰图文避坑指引。</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="/guides/" class="glass-card p-5 rounded-2xl text-center hover:border-brand-500/40 transition-colors group">
+        <div class="text-3xl mb-2">💻</div>
+        <h3 class="font-bold text-sm text-white group-hover:text-brand-300">Windows</h3>
+        <p class="text-[11px] text-slate-400 mt-1">Clash Verge Rev</p>
+      </a>
+      <a href="/guides/" class="glass-card p-5 rounded-2xl text-center hover:border-brand-500/40 transition-colors group">
+        <div class="text-3xl mb-2">🍏</div>
+        <h3 class="font-bold text-sm text-white group-hover:text-brand-300">macOS</h3>
+        <p class="text-[11px] text-slate-400 mt-1">Clash Verge / Sing-box</p>
+      </a>
+      <a href="/guides/" class="glass-card p-5 rounded-2xl text-center hover:border-brand-500/40 transition-colors group">
+        <div class="text-3xl mb-2">📱</div>
+        <h3 class="font-bold text-sm text-white group-hover:text-brand-300">iPhone / iPad</h3>
+        <p class="text-[11px] text-slate-400 mt-1">Shadowrocket / Surge</p>
+      </a>
+      <a href="/guides/" class="glass-card p-5 rounded-2xl text-center hover:border-brand-500/40 transition-colors group">
+        <div class="text-3xl mb-2">🤖</div>
+        <h3 class="font-bold text-sm text-white group-hover:text-brand-300">Android</h3>
+        <p class="text-[11px] text-slate-400 mt-1">Surfboard / Sing-box</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- 7. HOMEPAGE FAQ SECTION -->
+  <section class="py-12 bg-slate-950/60 border-t border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-white mb-2">❓ 常见问题疑难解答 preview</h2>
+        <p class="text-xs text-slate-400">挑选用户搜索频率最高的常见疑问解答，完整 100 题请访问 FAQ 中心。</p>
+      </div>
+
+      <FAQ items={homepageFaqs} />
+
+      <div class="text-center mt-6">
+        <a href="/faq/" class="inline-flex items-center px-5 py-2.5 rounded-xl bg-slate-800 text-sm font-semibold text-brand-300 hover:bg-slate-750 border border-slate-700 transition-colors">
+          进入 100 题 FAQ 知识库中心 →
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

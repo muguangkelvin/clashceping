@@ -1,0 +1,87 @@
+---
+import providersData from '../data/providers.json';
+
+export interface Props {
+  limit?: number;
+}
+
+const { limit } = Astro.props;
+const providers = limit ? providersData.slice(0, limit) : providersData; // All 28 providers by default
+---
+
+<div class="overflow-x-auto my-8 rounded-2xl border border-slate-800 bg-slate-950/80 shadow-2xl">
+  <table class="w-full text-left text-sm text-slate-300 min-w-[720px]">
+    <thead class="bg-slate-900 text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+      <tr>
+        <th scope="col" class="py-3.5 px-4 font-bold text-slate-200">排名 / 机场</th>
+        <th scope="col" class="py-3.5 px-4 font-bold text-slate-200">参考价格</th>
+        <th scope="col" class="py-3.5 px-4 font-bold text-slate-200">起步流量</th>
+        <th scope="col" class="py-3.5 px-4 font-bold text-slate-200">主要协议</th>
+        <th scope="col" class="py-3.5 px-4 font-bold text-slate-200">专属优惠码</th>
+        <th scope="col" class="py-3.5 px-4 font-bold text-slate-200 text-right">评测与官网入口</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-800/60">
+      {providers.map((p) => (
+        <tr class="hover:bg-slate-900/50 transition-colors">
+          <!-- Name & Rank -->
+          <td class="py-4 px-4 font-semibold text-white flex items-center space-x-2.5">
+            <span class={`w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold ${
+              p.rank === 1 ? 'bg-amber-400 text-slate-950' : 
+              p.rank === 2 ? 'bg-slate-300 text-slate-950' : 
+              p.rank === 3 ? 'bg-amber-700 text-white' : 
+              'bg-slate-800 text-slate-300'
+            }`}>
+              #{p.rank}
+            </span>
+            <a href={`/providers/${p.slug}/`} class="hover:text-brand-400 font-bold transition-colors">
+              {p.name}
+            </a>
+          </td>
+
+          <!-- Price -->
+          <td class="py-4 px-4 text-brand-400 font-bold">
+            {p.priceFrom || '以结算页为准'}
+          </td>
+
+          <!-- Traffic -->
+          <td class="py-4 px-4 text-emerald-400 font-medium">
+            {p.trafficFrom || '自选套餐'}
+          </td>
+
+          <!-- Protocols -->
+          <td class="py-4 px-4 text-xs text-slate-400">
+            {p.protocolSupport ? p.protocolSupport.join(', ') : 'Shadowsocks/Trojan'}
+          </td>
+
+          <!-- Coupon -->
+          <td class="py-4 px-4 text-xs">
+            {p.coupon && p.coupon !== '暂无优惠码' ? (
+              <code class="px-2 py-0.5 rounded bg-slate-800 text-amber-300 font-mono border border-slate-700">{p.coupon}</code>
+            ) : (
+              <span class="text-slate-500">以结算页为准</span>
+            )}
+          </td>
+
+          <!-- Action Double Links -->
+          <td class="py-4 px-4 text-right space-x-2 whitespace-nowrap">
+            <a 
+              href={`/providers/${p.slug}/`}
+              class="inline-block text-xs px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition-colors"
+            >
+              起底测评
+            </a>
+            <a 
+              href={p.inviteURL}
+              target="_blank"
+              rel="sponsored nofollow noopener"
+              class="inline-block text-xs px-3 py-1.5 rounded-lg bg-brand-600 text-white font-bold hover:bg-brand-500 shadow-md shadow-brand-600/20 transition-colors"
+            >
+              查看套餐
+            </a>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

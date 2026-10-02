@@ -1,0 +1,408 @@
+---
+// HeaderSearch.astro - Fuwari Glassmorphism Search Component with Portal/Teleport Fix
+---
+
+<div class="relative inline-block">
+  <!-- Desktop & Tablet Search Trigger Button -->
+  <button
+    type="button"
+    id="global-search-trigger"
+    class="hidden md:inline-flex items-center space-x-2 px-3.5 py-2 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-brand-500/60 text-slate-300 hover:text-white transition-all shadow-inner group focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+    aria-label="搜索全站文章与教程"
+  >
+    <svg class="w-4 h-4 text-slate-400 group-hover:text-brand-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <span class="text-xs sm:text-sm font-medium text-slate-400 group-hover:text-slate-200 whitespace-nowrap">
+      搜索全站...
+    </span>
+    <span class="inline-flex items-center space-x-0.5 px-1.5 py-0.5 rounded text-[10px] font-mono bg-slate-900/90 border border-slate-700/90 text-slate-400 group-hover:text-slate-300 group-hover:border-slate-600 transition-colors">
+      <kbd class="font-sans">Ctrl</kbd>
+      <kbd class="font-sans">K</kbd>
+    </span>
+  </button>
+
+  <!-- Mobile Search Trigger Button -->
+  <button
+    type="button"
+    id="mobile-search-trigger"
+    class="md:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/80 text-slate-300 hover:text-white hover:bg-slate-800 active:scale-95 transition-all"
+    aria-label="打开搜索面板"
+  >
+    <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  </button>
+
+  <!-- Search Modal Overlay (Teleported to document.body on client load) -->
+  <div
+    id="search-modal"
+    class="fixed inset-0 z-[999999] bg-slate-950/85 backdrop-blur-md hidden flex-col items-center justify-start pt-12 sm:pt-20 px-3 sm:px-4 pb-8 overflow-hidden transition-all duration-200"
+    role="dialog"
+    aria-modal="true"
+  >
+    <!-- Modal Container Card -->
+    <div
+      id="search-modal-container"
+      class="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl flex flex-col min-h-[380px] max-h-[82vh] overflow-hidden"
+    >
+      <!-- Modal Header / Input Bar -->
+      <div class="relative p-3.5 sm:p-4 border-b border-slate-800 flex items-center space-x-3 bg-slate-950/70">
+        <svg class="w-5 h-5 text-brand-400 absolute left-6 sm:left-7 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+
+        <input
+          type="text"
+          id="search-input"
+          placeholder="搜索全站文章、教程、机场或疑难故障（如：Clash、超时、小火箭）..."
+          class="w-full bg-slate-900 text-white placeholder-slate-400 pl-10 sm:pl-11 pr-10 py-2.5 sm:py-3 rounded-xl border border-slate-700/80 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 text-xs sm:text-base transition-all"
+          autocomplete="off"
+        />
+
+        <button
+          type="button"
+          id="search-clear-btn"
+          class="hidden absolute right-16 sm:right-16 top-1/2 -translate-y-1/2 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+          aria-label="清空搜索"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          id="search-modal-close"
+          class="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors flex-shrink-0"
+        >
+          ESC
+        </button>
+      </div>
+
+      <!-- Hot Search Tag Suggestions -->
+      <div class="px-3.5 sm:px-4 py-2 bg-slate-950/40 border-b border-slate-800/60 flex items-center space-x-2 overflow-x-auto scrollbar-none text-xs text-slate-400">
+        <span class="text-slate-300 font-semibold whitespace-nowrap flex-shrink-0">🔥 热门搜索:</span>
+        <button type="button" class="hot-tag px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-brand-600/30 hover:text-brand-300 transition-colors whitespace-nowrap">Clash Verge</button>
+        <button type="button" class="hot-tag px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-brand-600/30 hover:text-brand-300 transition-colors whitespace-nowrap">IEPL专线</button>
+        <button type="button" class="hot-tag px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-brand-600/30 hover:text-brand-300 transition-colors whitespace-nowrap">节点超时</button>
+        <button type="button" class="hot-tag px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-brand-600/30 hover:text-brand-300 transition-colors whitespace-nowrap">小火箭</button>
+        <button type="button" class="hot-tag px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-brand-600/30 hover:text-brand-300 transition-colors whitespace-nowrap">ChatGPT解锁</button>
+        <button type="button" class="hot-tag px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-brand-600/30 hover:text-brand-300 transition-colors whitespace-nowrap">灵动云</button>
+      </div>
+
+      <!-- Results Scrollable Area -->
+      <div id="search-results" class="p-3.5 sm:p-4 overflow-y-auto space-y-3 flex-1 min-h-[220px] scrollbar-thin">
+        <div id="search-placeholder" class="py-10 sm:py-12 text-center text-slate-300">
+          <svg class="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-slate-500 mb-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <p class="text-sm font-medium text-slate-300">输入关键词开始全局检索</p>
+          <p class="text-xs text-slate-400 mt-1">支持搜：专线、规则集、节点超时、订阅失败、Netflix、小火箭等</p>
+        </div>
+
+        <div id="search-empty" class="hidden py-8 sm:py-10 text-center">
+          <p class="text-base font-semibold text-slate-300">未找到相关文章或教程 🔍</p>
+          <p class="text-xs text-slate-400 mt-2">
+            建议尝试换个词：<span class="text-brand-400">Clash / 梯子 / 专线 / 节点超时 / 小火箭</span>
+          </p>
+        </div>
+
+        <div id="results-list" class="space-y-2.5"></div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-4 py-2.5 bg-slate-950/80 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <span><kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700">↑</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700">↓</kbd> 导航</span>
+          <span><kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700">↵</kbd> 跳转</span>
+        </div>
+        <div id="results-count" class="font-mono text-brand-400"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  interface SearchItem {
+    id: string;
+    title: string;
+    url: string;
+    category: string;
+    description: string;
+    keywords: string[];
+    search_synonyms: string[];
+    tags: string[];
+  }
+
+  let fuse: Fuse<SearchItem> | null = null;
+  let searchData: SearchItem[] = [];
+  let selectedIndex = -1;
+
+  const triggerDesktop = document.getElementById('global-search-trigger');
+  const triggerMobile = document.getElementById('mobile-search-trigger');
+  const modal = document.getElementById('search-modal');
+  const closeBtn = document.getElementById('search-modal-close');
+  const input = document.getElementById('search-input') as HTMLInputElement | null;
+  const clearBtn = document.getElementById('search-clear-btn');
+  const placeholder = document.getElementById('search-placeholder');
+  const emptyState = document.getElementById('search-empty');
+  const resultsList = document.getElementById('results-list');
+  const resultsCount = document.getElementById('results-count');
+  const hotTags = document.querySelectorAll('.hot-tag');
+
+  // Teleport modal to document.body so it breaks out of header backdrop-blur containing block
+  function teleportModalToBody() {
+    if (modal && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+  }
+
+  // Preload & Load search index
+  async function initFuse() {
+    teleportModalToBody();
+    if (fuse) return;
+    try {
+      const res = await fetch('/search-index.json');
+      if (!res.ok) throw new Error('Search index fetch failed');
+      searchData = await res.json();
+      fuse = new Fuse(searchData, {
+        keys: [
+          { name: 'title', weight: 0.35 },
+          { name: 'keywords', weight: 0.25 },
+          { name: 'search_synonyms', weight: 0.20 },
+          { name: 'category', weight: 0.10 },
+          { name: 'description', weight: 0.07 },
+          { name: 'tags', weight: 0.03 }
+        ],
+        threshold: 0.4,
+        distance: 100,
+        minMatchCharLength: 1,
+        ignoreLocation: true,
+        findAllMatches: true
+      });
+    } catch (err) {
+      console.error('Fuse init error:', err);
+    }
+  }
+
+  // Teleport & Preload on Ready
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFuse();
+  } else {
+    document.addEventListener('DOMContentLoaded', initFuse);
+  }
+  triggerDesktop?.addEventListener('mouseenter', initFuse);
+  triggerMobile?.addEventListener('mouseenter', initFuse);
+
+  function openModal() {
+    teleportModalToBody();
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    initFuse();
+    setTimeout(() => input?.focus(), 50);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    if (input) input.value = '';
+    renderResults([], '');
+  }
+
+  function highlightMatches(text: string, query: string): string {
+    if (!query || !text) return text || '';
+    const tokens = query.trim().split(/\s+/).filter(Boolean);
+    if (tokens.length === 0) return text;
+    
+    let result = text;
+    tokens.forEach(token => {
+      const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escaped})`, 'gi');
+      result = result.replace(regex, '<mark class="bg-brand-500/30 text-brand-300 font-bold px-0.5 rounded">$1</mark>');
+    });
+    return result;
+  }
+
+  function renderResults(results: Fuse.FuseResult<SearchItem>[], query: string = '') {
+    if (!resultsList || !resultsCount || !placeholder || !emptyState || !clearBtn) return;
+
+    if (query.trim() !== '') {
+      clearBtn.classList.remove('hidden');
+    } else {
+      clearBtn.classList.add('hidden');
+    }
+
+    if (query.trim() === '') {
+      placeholder.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      resultsList.innerHTML = '';
+      resultsCount.textContent = '';
+      selectedIndex = -1;
+      return;
+    }
+
+    placeholder.classList.add('hidden');
+
+    if (results.length === 0) {
+      emptyState.classList.remove('hidden');
+      resultsList.innerHTML = '';
+      resultsCount.textContent = '0 结果';
+      selectedIndex = -1;
+      return;
+    }
+
+    emptyState.classList.add('hidden');
+    resultsCount.textContent = `找到 ${results.length} 条结果`;
+    selectedIndex = 0;
+
+    resultsList.innerHTML = results.slice(0, 15).map((res, index) => {
+      const item = res.item;
+      const titleHtml = highlightMatches(item.title, query);
+      const descHtml = highlightMatches(item.description, query);
+      const isSelected = index === selectedIndex;
+
+      let badgeColor = 'bg-brand-500/10 border-brand-500/30 text-brand-300';
+      if (item.category.includes('常见') || item.category.includes('FAQ')) {
+        badgeColor = 'bg-amber-500/10 border-amber-500/30 text-amber-300';
+      } else if (item.category.includes('教程')) {
+        badgeColor = 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
+      } else if (item.category.includes('榜单') || item.category.includes('实力')) {
+        badgeColor = 'bg-purple-500/10 border-purple-500/30 text-purple-300';
+      }
+
+      return `
+        <a
+          href="${item.url}"
+          data-index="${index}"
+          class="search-result-item block p-3.5 rounded-xl border transition-all ${
+            isSelected 
+              ? 'bg-slate-800/90 border-brand-500/60 shadow-lg shadow-brand-500/10 ring-1 ring-brand-500/40' 
+              : 'bg-slate-950/60 border-slate-800/80 hover:bg-slate-800/60 hover:border-slate-700'
+          }"
+        >
+          <div class="flex items-center space-x-2 mb-1.5">
+            <span class="px-2 py-0.5 rounded-md border text-[11px] font-semibold ${badgeColor} flex-shrink-0">
+              ${item.category}
+            </span>
+            <h4 class="text-sm sm:text-base font-bold text-white group-hover:text-brand-300 truncate">
+              ${titleHtml}
+            </h4>
+          </div>
+          <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+            ${descHtml}
+          </p>
+        </a>
+      `;
+    }).join('');
+
+    updateSelection();
+  }
+
+  function updateSelection() {
+    const items = document.querySelectorAll('.search-result-item');
+    items.forEach((item, index) => {
+      if (index === selectedIndex) {
+        item.classList.add('bg-slate-800/90', 'border-brand-500/60', 'ring-1', 'ring-brand-500/40');
+        item.classList.remove('bg-slate-950/60', 'border-slate-800/80');
+        item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      } else {
+        item.classList.remove('bg-slate-800/90', 'border-brand-500/60', 'ring-1', 'ring-brand-500/40');
+        item.classList.add('bg-slate-950/60', 'border-slate-800/80');
+      }
+    });
+  }
+
+  function performSearch() {
+    if (!fuse || !input) return;
+    const rawQuery = input.value.trim();
+    if (rawQuery === '') {
+      renderResults([], '');
+      return;
+    }
+
+    let results = fuse.search(rawQuery);
+
+    if (results.length === 0 && rawQuery.includes(' ')) {
+      const tokens = rawQuery.split(/\s+/).filter(Boolean);
+      results = fuse.search(tokens.join(' '));
+    }
+
+    renderResults(results, rawQuery);
+  }
+
+  // Event Listeners
+  triggerDesktop?.addEventListener('click', openModal);
+  triggerMobile?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+
+  clearBtn?.addEventListener('click', () => {
+    if (input) input.value = '';
+    performSearch();
+    input?.focus();
+  });
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  input?.addEventListener('input', performSearch);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const activeEl = document.activeElement;
+    const isTyping = activeEl && (
+      activeEl.tagName === 'INPUT' || 
+      activeEl.tagName === 'TEXTAREA' || 
+      activeEl.isContentEditable
+    ) && activeEl !== input;
+
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      if (!isTyping) {
+        e.preventDefault();
+        if (modal?.classList.contains('hidden')) {
+          openModal();
+        } else {
+          closeModal();
+        }
+      }
+    } else if (e.key === 'Escape' && !modal?.classList.contains('hidden')) {
+      closeModal();
+    } else if (!modal?.classList.contains('hidden')) {
+      const items = document.querySelectorAll('.search-result-item');
+      if (items.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex + 1) % items.length;
+        updateSelection();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+        updateSelection();
+      } else if (e.key === 'Enter' && selectedIndex >= 0) {
+        e.preventDefault();
+        const activeItem = items[selectedIndex] as HTMLAnchorElement;
+        if (activeItem) activeItem.click();
+      }
+    }
+  });
+
+  // Hot Tag Clicks
+  hotTags.forEach((tag) => {
+    tag.addEventListener('click', () => {
+      const tagText = tag.textContent?.trim() || '';
+      if (input) {
+        input.value = tagText;
+        performSearch();
+        input.focus();
+      }
+    });
+  });
+</script>
